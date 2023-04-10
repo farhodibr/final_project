@@ -18,21 +18,21 @@ export default function CreateItem() {
 
   const postItem = (event) => {
     event.preventDefault();
+    const formattedPrice = Number(itemPrice).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     axios
-    .post('https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory', {
+      .post('https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory', {
         itemName,
-        itemPrice,
+        itemPrice: formattedPrice,
         itemQuantity,
-  })
-  .then((res) => {
-    console.log(res);
-    
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
+  
 
   return (
     <Form>

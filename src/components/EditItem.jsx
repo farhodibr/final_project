@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import '../App.css';
 
 export default function EditItem(props) {
-  //destructuring props
-  const { APIdata, setAPIdata } = useState(props.selectedItem);
+  // destructuring props
+  const { item, APIdata, setAPIdata } = props;
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [ID, setID] = useState(APIdata.id);
-  const [itemName, setItemName] = useState(APIdata.itemName);
-  const [itemPrice, setItemPrice] = useState(APIdata.itemPrice);
-  const [itemQuantity, setItemQuantity] = useState(APIdata.itemQuantity);
+  const [ID, setID] = useState(item.id);
+  const [itemName, setItemName] = useState(item.itemName);
+  const [itemPrice, setItemPrice] = useState(item.itemPrice);
+  const [itemQuantity, setItemQuantity] = useState(item.itemQuantity);
+
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = (item) => { //item is the parameter
+  const handleShowModal = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
   
   const handleEdit = (event, id) => {
-    id = APIdata.id;
-    event.preventDefault();
+    id = ID;
+   // event.preventDefault();
     console.log("Edit item with id:", id);
 
     axios
@@ -45,8 +46,11 @@ export default function EditItem(props) {
       });
   };
 
-  return (
+  return (    
     <>
+      <Button variant="primary" onClick={() => handleShowModal(item)}>
+        Edit
+      </Button>
    
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -97,7 +101,7 @@ export default function EditItem(props) {
           </Button>
           <Button
             variant="primary"
-            onClick={(e) => handleEdit(e, selectedItem.id)}
+            onClick={(e) => handleEdit(e, ID)}
           >
             Save Changes
           </Button>

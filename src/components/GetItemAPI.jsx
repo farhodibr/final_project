@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
-import '../App.css';
+import "../App.css";
 import EditItem from "./EditItem";
 
 export default function GetItem() {
@@ -29,32 +29,6 @@ export default function GetItem() {
       });
   }, []);
 
-  const handleEdit = (event, id) => {
-    event.preventDefault();
-    console.log("Edit item with id:", id);
-
-    axios
-      .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${id}`, {
-        itemName,
-        itemPrice,
-        itemQuantity,
-      })
-      .then((res) => {
-        console.log(res);
-        handleCloseModal();
-        const updatedData = APIdata.map((item) => {
-          if (item.id === id) {
-            return res.data;
-          }
-          return item;
-        });
-        setAPIdata(updatedData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <>
       <Table striped bordered hover>
@@ -62,8 +36,9 @@ export default function GetItem() {
           <tr>
             <th>ID</th>
             <th>Item Name</th>
-            <th>Item Price</th>
             <th>Item Quantity</th>
+            <th>Item Price</th>
+
             <th>Edit</th>
           </tr>
         </thead>
@@ -72,74 +47,16 @@ export default function GetItem() {
             <tr className="Navbar" key={item.id}>
               <td>{item.id}</td>
               <td>{item.itemName}</td>
-              <td>{item.itemPrice}</td>
               <td>{item.itemQuantity}</td>
+              <td>{item.itemPrice}</td>
+
               <td>
-                <Button variant="primary" onClick={() => handleShowModal(item)}>
-                  Edit
-                </Button>
+                <EditItem item={item} />
               </td>
-              
             </tr>
           ))}
         </tbody>
       </Table>
-
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Item</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicItemName">
-              <Form.Label>Item Name</Form.Label>
-              <Form.Control
-                onChange={(e) => {
-                  setItemName(e.target.value);
-                }}
-                type="text"
-                placeholder="Enter item name"
-                defaultValue={selectedItem ? selectedItem.itemName : itemName}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicItemPrice">
-              <Form.Label>Item Price</Form.Label>
-              <Form.Control
-                onChange={(e) => {
-                  setItemPrice(e.target.value);
-                }}
-                type="number"
-                placeholder="Enter item price"
-                defaultValue={selectedItem ? selectedItem.itemPrice : ""}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicItemQuantity">
-              <Form.Label>Item Quantity</Form.Label>
-              <Form.Control
-                onChange={(e) => {
-                  setItemQuantity(e.target.value);
-                }}
-                type="number"
-                placeholder="Enter item quantity"
-                defaultValue={selectedItem ? selectedItem.itemQuantity : ""}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={(e) => handleEdit(e, selectedItem.id)}
-          >
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }
