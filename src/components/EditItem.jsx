@@ -2,34 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
 import '../App.css';
-import EditItem from "./EditItem";
 
-export default function GetItem() {
-  const [APIdata, setAPIdata] = useState([]);
+export default function EditItem(props) {
+  //destructuring props
+  const { APIdata, setAPIdata } = useState(props.selectedItem);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [ID, setID] = useState(APIdata.id);
   const [itemName, setItemName] = useState(APIdata.itemName);
   const [itemPrice, setItemPrice] = useState(APIdata.itemPrice);
   const [itemQuantity, setItemQuantity] = useState(APIdata.itemQuantity);
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = (item) => {
+  const handleShowModal = (item) => { //item is the parameter
     setSelectedItem(item);
     setShowModal(true);
   };
-
-  useEffect(() => {
-    axios
-      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory", {})
-      .then((res) => {
-        setAPIdata(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
+  
   const handleEdit = (event, id) => {
+    id = APIdata.id;
     event.preventDefault();
     console.log("Edit item with id:", id);
 
@@ -57,34 +47,7 @@ export default function GetItem() {
 
   return (
     <>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Item Name</th>
-            <th>Item Price</th>
-            <th>Item Quantity</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody className="Navbar">
-          {APIdata.map((item) => (
-            <tr className="Navbar" key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.itemName}</td>
-              <td>{item.itemPrice}</td>
-              <td>{item.itemQuantity}</td>
-              <td>
-                <Button variant="primary" onClick={() => handleShowModal(item)}>
-                  Edit
-                </Button>
-              </td>
-              
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
+   
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Item</Modal.Title>

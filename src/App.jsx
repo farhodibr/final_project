@@ -13,13 +13,15 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import './index.css';
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar bg="light" expand="lg">
+      <Navbar className="Navbar" bg="green" expand="lg">
         <Container>
-          <Navbar.Brand>Store Inventory</Navbar.Brand>
+          <Navbar.Brand >Store Inventory</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
