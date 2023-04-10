@@ -1,69 +1,114 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import axios from "axios";
-import "../App.css";
 import EditItem from "./EditItem";
+import { BsSortAlphaDown } from "react-icons/bs";
+import { BsSortNumericDown } from "react-icons/bs";
 
-export default function GetItem() {
-  // Declaring state variables and functions using the useState hook
-  const [APIdata, setAPIdata] = useState([]); // An array to store the data fetched from the API
-  const [showModal, setShowModal] = useState(false); // A boolean to show/hide the edit modal
-  const [selectedItem, setSelectedItem] = useState(null); // An object to store the item selected for editing
-  const [itemName, setItemName] = useState(APIdata.itemName); // A string to store the item name
-  const [itemPrice, setItemPrice] = useState(APIdata.itemPrice); // A number to store the item price
-  const [itemQuantity, setItemQuantity] = useState(APIdata.itemQuantity); // A number to store the item quantity
-  const [itemTotalPrice, setItemTotalPrice] = useState(APIdata.itemTotalPrice); // A number to store the total price of the item based on the quantity
+export default function GetItem(props) {
+  const [APIdata, setAPIdata] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [sortedItems, setSortedItems] = useState([]);
 
-  // Function to handle closing the edit modal
   const handleCloseModal = () => setShowModal(false);
-  
-  // Function to handle opening the edit modal and setting the selectedItem state variable
+
   const handleShowModal = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
 
-  // Using the useEffect hook to fetch data from the API when the component mounts
+  const sortItemsByName = () => {
+    const sorted = [...APIdata].sort((a, b) =>
+      a.itemName.localeCompare(b.itemName)
+    );
+    setSortedItems(sorted);
+  };
+
+  const sortItemsByPrice = () => {
+    const sorted = [...APIdata].sort((a, b) =>
+      a.itemPrice.localeCompare(b.itemPrice)
+    );
+    setSortedItems(sorted);
+  };
+
+  const sortItemsByTotal = () => {
+    const sorted = [...APIdata].sort((a, b) =>
+      a.itemTotalPrice.localeCompare(b.itemTotalPrice)
+    );
+    setSortedItems(sorted);
+  };
+
   useEffect(() => {
     axios
-      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory", {})
+      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
       .then((res) => {
-        setAPIdata(res.data); // Sets the state variable APIdata with the data fetched from the API
-        console.log(res.data);
+        setAPIdata(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // Renders a table to display the data fetched from the API
   return (
     <>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Item Name</th>
-            <th>Item Quantity</th>
-            <th>Item Price</th>
-            <th>Item Total Price</th>
+            <th>
+              Item Name{" "}
+              <Button variant="link" onClick={sortItemsByName}>
+                 <BsSortAlphaDown />
+              </Button>
+            </th>
+            <th>
+              Item Quantity
+              <Button variant="link" onClick={sortItemsByName}>
+                 <BsSortNumericDown />
+              </Button>
+            </th>
+            <th>
+              Item Price
+              <Button variant="link" onClick={sortItemsByPrice}>
+                 <BsSortNumericDown />
+              </Button>
+            </th>
+            <th>
+              Item Total Price
+              <Button type="sort" variant="link" onClick={sortItemsByTotal}>
+                 <BsSortNumericDown />
+              </Button>
+            </th>
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody className="Navbar">
-          {APIdata.map((item) => (
-            <tr className="Navbar" key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.itemName}</td>
-              <td>{item.itemQuantity}</td>
-              <td>{item.itemPrice}</td>
-              <td>{item.itemTotalPrice}</td>
-              <td>
-                {/* Renders an EditItem component for each item in the APIdata array */}
-                <EditItem item={item} />
-              </td>
-            </tr>
-          ))}
+        <tbody>
+          {sortedItems.length > 0
+            ? sortedItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.itemName}</td>
+                  <td>{item.itemQuantity}</td>
+                  <td>{item.itemPrice}</td>
+                  <td>{item.itemTotalPrice}</td>
+                  <td>
+                    <EditItem item={item} />
+                  </td>
+                </tr>
+              ))
+            : APIdata.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.itemName}</td>
+                  <td>{item.itemQuantity}</td>
+                  <td>{item.itemPrice}</td>
+                  <td>{item.itemTotalPrice}</td>
+                  <td>
+                    <EditItem item={item} />
+                  </td>
+                </tr>
+              ))}
         </tbody>
       </Table>
     </>

@@ -2,8 +2,9 @@ import { event } from "jquery";
 import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
+import EditItem from "./EditItem";
 
-export default function CreateItem() {
+export default function CreateItem(props) {
   // Sets up state variables using useState hook
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState(0);
@@ -15,7 +16,7 @@ export default function CreateItem() {
 
   // Using useEffect hook to update total price when price or quantity changes
   useEffect(() => setItemTotalPrice(itemPrice * itemQuantity));
-
+ 
   // Defining function to post item data to API
   const postItem = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -28,10 +29,11 @@ export default function CreateItem() {
       style: "currency",
       currency: "USD",
     });
+    const formattedItemName = itemName.toUpperCase();
     // Using axios to post item data to mock API
     axios
       .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory", {
-        itemName,
+        itemName: formattedItemName,
         itemPrice: formattedPrice,
         itemQuantity,
         itemTotalPrice: formattedTotalPrice,
