@@ -20,6 +20,8 @@ export default function Comments(props) {
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Comment for {props.itemID.itemName}</Modal.Title>
+          
+
         </Modal.Header>
         <Modal.Body>
           <Form>
