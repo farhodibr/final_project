@@ -1,34 +1,48 @@
 import React, { useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
-import '../App.css';
+import "../App.css";
 
 export default function EditItem(props) {
   // destructuring props
   const { item, APIdata, setAPIdata } = props;
-  const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [ID, setID] = useState(item.id);
   const [itemName, setItemName] = useState(item.itemName);
   const [itemPrice, setItemPrice] = useState(item.itemPrice);
   const [itemQuantity, setItemQuantity] = useState(item.itemQuantity);
+  const [itemTotalPrice, setItemTotalPrice] = useState(item.itemTotalPrice);
+  const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
-  
+
+  const formattedPrice = Number(itemPrice).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  const formattedTotalPrice = Number(itemPrice * itemQuantity).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   const handleEdit = (event, id) => {
     id = ID;
-   // event.preventDefault();
+    
+    // event.preventDefault();
     console.log("Edit item with id:", id);
+
 
     axios
       .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${id}`, {
         itemName,
-        itemPrice,
+        itemPrice: formattedPrice,
         itemQuantity,
+        itemTotalPrice: formattedTotalPrice,
       })
       .then((res) => {
         console.log(res);
@@ -46,12 +60,12 @@ export default function EditItem(props) {
       });
   };
 
-  return (    
+  return (
     <>
       <Button variant="primary" onClick={() => handleShowModal(item)}>
         Edit
       </Button>
-   
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Item</Modal.Title>
@@ -93,16 +107,17 @@ export default function EditItem(props) {
                 defaultValue={selectedItem ? selectedItem.itemQuantity : ""}
               />
             </Form.Group>
+            <Form.Group controlId="formBasicItemQuantity">
+              <Form.Label>Item Total Price {itemTotalPrice}</Form.Label>
+              
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            onClick={(e) => handleEdit(e, ID)}
-          >
+          <Button variant="primary" onClick={(e) => handleEdit(e, ID)}>
             Save Changes
           </Button>
         </Modal.Footer>

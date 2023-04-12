@@ -4,8 +4,9 @@ import axios from "axios";
 import EditItem from "./EditItem";
 import { BsSortAlphaDown } from "react-icons/bs";
 import { BsSortNumericDown } from "react-icons/bs";
+import Comments from "./ItemComment";
 
-export default function GetItem(props) {
+export default function GetItem() {
   const [APIdata, setAPIdata] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -59,28 +60,29 @@ export default function GetItem(props) {
             <th>
               Item Name{" "}
               <Button variant="link" onClick={sortItemsByName}>
-                 <BsSortAlphaDown />
+                <BsSortAlphaDown />
               </Button>
             </th>
             <th>
               Item Quantity
-              <Button variant="link" onClick={sortItemsByName}>
-                 <BsSortNumericDown />
+              <Button variant="link" onClick={sortItemsByPrice}>
+                <BsSortNumericDown />
               </Button>
             </th>
             <th>
               Item Price
               <Button variant="link" onClick={sortItemsByPrice}>
-                 <BsSortNumericDown />
+                <BsSortNumericDown />
               </Button>
             </th>
             <th>
               Item Total Price
               <Button type="sort" variant="link" onClick={sortItemsByTotal}>
-                 <BsSortNumericDown />
+                <BsSortNumericDown />
               </Button>
             </th>
             <th>Edit</th>
+            <th>Comment</th>
           </tr>
         </thead>
         <tbody>
@@ -92,8 +94,12 @@ export default function GetItem(props) {
                   <td>{item.itemQuantity}</td>
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
+                  
                   <td>
                     <EditItem item={item} />
+                  </td>
+                  <td>
+                    <Comments itemID={item} />
                   </td>
                 </tr>
               ))
@@ -104,8 +110,12 @@ export default function GetItem(props) {
                   <td>{item.itemQuantity}</td>
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
+                
                   <td>
                     <EditItem item={item} />
+                  </td>
+                  <td>
+                    <Comments itemID={item} />
                   </td>
                 </tr>
               ))}

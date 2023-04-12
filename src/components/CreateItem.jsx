@@ -10,12 +10,13 @@ export default function CreateItem(props) {
   const [itemPrice, setItemPrice] = useState(0);
   const [itemQuantity, setItemQuantity] = useState(0);
   const [itemTotalPrice, setItemTotalPrice] = useState(0);
+  const [itemComment, setItemComment] = useState("");
   const [itemDescription, setItemDescription] = useState("");
   const [itemImage, setItemImage] = useState("");
   const [itemCategory, setItemCategory] = useState("");
 
   // Using useEffect hook to update total price when price or quantity changes
-  useEffect(() => setItemTotalPrice(itemPrice * itemQuantity));
+
  
   // Defining function to post item data to API
   const postItem = (event) => {
@@ -25,10 +26,11 @@ export default function CreateItem(props) {
       style: "currency",
       currency: "USD",
     });
-    const formattedTotalPrice = Number(itemTotalPrice).toLocaleString("en-US", {
+    const formattedTotalPrice = Number(itemPrice * itemQuantity).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
     });
+
     const formattedItemName = itemName.toUpperCase();
     // Using axios to post item data to mock API
     axios
@@ -37,8 +39,10 @@ export default function CreateItem(props) {
         itemPrice: formattedPrice,
         itemQuantity,
         itemTotalPrice: formattedTotalPrice,
+        itemComment,
       })
       .then((res) => {
+        setItemPrice(0); // Resets itemPrice state to 0
         console.log(res);
       })
       .catch((err) => {
@@ -50,7 +54,7 @@ export default function CreateItem(props) {
   return (
     <Form>
       <Row>
-        <Col xs={7}>
+        <Col xs={5}>
           Enter Item Name
           <Form.Control
             placeholder="Item Name"
@@ -80,6 +84,15 @@ export default function CreateItem(props) {
         <Col>
           Item Total Price {itemTotalPrice}
           <Form.Control placeholder="Price" value={itemTotalPrice} /> 
+        </Col>
+        <Col>
+          Leave comment
+          <Form.Control 
+          placeholder="Comment" 
+          value={itemComment} 
+          onChange={(event) => {
+            setItemComment(event.target.value); // Updates itemComment state with input value
+          }} /> 
         </Col>
         <Button type="submit" onClick={postItem} /* Calls postItem function when button is clicked*/> 
           Submit
