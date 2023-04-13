@@ -14,6 +14,7 @@ export default function CreateItem(props) {
   const [itemDescription, setItemDescription] = useState("");
   const [itemImage, setItemImage] = useState("");
   const [itemCategory, setItemCategory] = useState("");
+  const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
 
   // Using useEffect hook to update total price when price or quantity changes
 
@@ -43,10 +44,15 @@ export default function CreateItem(props) {
       })
       .then((res) => {
         setItemPrice(0); // Resets itemPrice state to 0
+        setItemQuantity(0); // Resets itemQuantity state to 0
+        setItemComment(""); // Resets itemComment state to an empty string
+        setItemName(""); // Resets itemName state to an empty string
+        setItemTotalPrice(0); // Resets itemTotalPrice state to 0
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
+        setShouldRender(true); // Set state variable to true to trigger re-render
       });
   };
 
@@ -58,6 +64,7 @@ export default function CreateItem(props) {
           Enter Item Name
           <Form.Control
             placeholder="Item Name"
+            value={itemName}
             onChange={(event) => {
               setItemName(event.target.value); // Updates itemName state with input value
             }}
@@ -67,6 +74,7 @@ export default function CreateItem(props) {
           Enter Item Quantity
           <Form.Control
             placeholder="Quantity"
+            value={itemQuantity}
             onChange={(event) => {
               setItemQuantity(event.target.value); // Updates itemQuantity state with input value
             }}
@@ -76,6 +84,7 @@ export default function CreateItem(props) {
           Enter Item Price
           <Form.Control
             placeholder="Price"
+            value={itemPrice}
             onChange={(event) => {
               setItemPrice(event.target.value); // Updates itemPrice state with input value
             }}

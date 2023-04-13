@@ -93,6 +93,7 @@ export default function EditItem(props) {
                 type="number"
                 placeholder="Enter item price"
                 defaultValue={selectedItem ? selectedItem.itemPrice : ""}
+
               />
             </Form.Group>
 
