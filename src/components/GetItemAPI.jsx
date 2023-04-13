@@ -33,6 +33,13 @@ export default function GetItem() {
     setSortedItems(sorted);
   };
 
+  const sortItemsByQuantity = () => {
+    const sorted = [...APIdata].sort((a, b) =>
+      a.itemQuantity.localeCompare(b.itemQuantity)
+    );
+    setSortedItems(sorted);
+  };
+
   const sortItemsByTotal = () => {
     const sorted = [...APIdata].sort((a, b) =>
       a.itemTotalPrice.localeCompare(b.itemTotalPrice)
@@ -65,7 +72,7 @@ export default function GetItem() {
             </th>
             <th>
               Item Quantity
-              <Button variant="link" onClick={sortItemsByPrice}>
+              <Button variant="link" onClick={sortItemsByQuantity}>
                 <BsSortNumericDown />
               </Button>
             </th>
