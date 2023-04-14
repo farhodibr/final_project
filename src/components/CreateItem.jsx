@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import EditItem from "./EditItem";
+import ItemMeasure from "./DropdownItemPackage";
 
 export default function CreateItem(props) {
   // Sets up state variables using useState hook
@@ -15,6 +16,7 @@ export default function CreateItem(props) {
   const [itemImage, setItemImage] = useState("");
   const [itemCategory, setItemCategory] = useState("");
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
+  const [itemMeasure, setItemMeasure] = useState(props.measure);
 
   // Using useEffect hook to update total price when price or quantity changes
 
@@ -41,6 +43,7 @@ export default function CreateItem(props) {
         itemQuantity,
         itemTotalPrice: formattedTotalPrice,
         itemComment,
+        itemMeasure,
       })
       .then((res) => {
         setItemPrice(0); // Resets itemPrice state to 0
@@ -48,6 +51,7 @@ export default function CreateItem(props) {
         setItemComment(""); // Resets itemComment state to an empty string
         setItemName(""); // Resets itemName state to an empty string
         setItemTotalPrice(0); // Resets itemTotalPrice state to 0
+        setItemMeasure(""); // Resets itemMeasure state to an empty string
         console.log(res);
       })
       .catch((err) => {
@@ -60,7 +64,7 @@ export default function CreateItem(props) {
   return (
     <Form>
       <Row>
-        <Col xs={5}>
+        <Col xs={3}>
           Enter Item Name
           <Form.Control
             placeholder="Item Name"
@@ -79,6 +83,10 @@ export default function CreateItem(props) {
               setItemQuantity(event.target.value); // Updates itemQuantity state with input value
             }}
           />
+        </Col>
+        <Col>
+        <br />
+          <ItemMeasure />
         </Col>
         <Col>
           Enter Item Price
