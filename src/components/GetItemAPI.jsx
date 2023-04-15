@@ -8,6 +8,7 @@ import Comments from "./ItemComment";
 import DeleteItem from "./DeleteItem";
 
 export default function GetItem() {
+  // Create state variables
   const [APIdata, setAPIdata] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -20,6 +21,7 @@ export default function GetItem() {
     setShowModal(true);
   };
 
+  // Sort functions
   const sortItemsByName = () => {
     const sorted = [...APIdata].sort((a, b) =>
       a.itemName.localeCompare(b.itemName)
@@ -48,6 +50,7 @@ export default function GetItem() {
     setSortedItems(sorted);
   };
 
+  // Get data from API
   useEffect(() => {
     axios
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
@@ -99,7 +102,8 @@ export default function GetItem() {
           </tr>
         </thead>
         <tbody>
-          {sortedItems.length > 0
+          { // If sortedItems is not empty, map through sortedItems, else map through APIdata
+          sortedItems.length > 0
             ? sortedItems.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
@@ -121,6 +125,7 @@ export default function GetItem() {
                   </td>
                 </tr>
               ))
+              // Map through APIdata
             : APIdata.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
@@ -132,13 +137,13 @@ export default function GetItem() {
                 
                  
                   <td>
-                    <Comments itemID={item} />
+                    <Comments itemID={item} /* passing props to Comments component*/ />
                   </td>
                   <td>
-                    <EditItem item={item} />
+                    <EditItem item={item} /* passing props to EditItem component*/ />
                   </td>
                   <td>
-                    <DeleteItem item={item} />
+                    <DeleteItem item={item} /* passing props to DeleteItem component*/  />
                   </td>
                 </tr>
               ))}

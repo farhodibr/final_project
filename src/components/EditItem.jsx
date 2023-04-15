@@ -13,34 +13,36 @@ export default function EditItem(props) {
   const [itemQuantity, setItemQuantity] = useState(item.itemQuantity);
   const [itemMeasure, setItemMeasure] = useState(item.itemMeasure);
   const [itemTotalPrice, setItemTotalPrice] = useState(item.itemTotalPrice);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Add state variable to show modal
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
 
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => setShowModal(false); // Add function to close modal
   const handleShowModal = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
 
  
-
+  // Add function to convert price to USD currency format
   const formattedPrice = Number(itemPrice).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   });
 
+  // Add function to convert total price to USD currency format
   const formattedTotalPrice = Number(itemPrice * itemQuantity).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   });
 
+  // Add function to edit item
   const handleEdit = (event, id) => {
     id = ID;
     
     event.preventDefault();
     console.log("Edit item with id:", id);
 
-
+    // Edit item in API
     axios
       .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${id}`, {
         itemName,
