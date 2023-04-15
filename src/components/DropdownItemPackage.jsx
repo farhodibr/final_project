@@ -14,16 +14,17 @@ export default function ItemMeasure() {
   console.log(itemMeasure)
   return (
     <Dropdown>
-      
+   
       <Dropdown.Toggle variant="success" id="dropdown-basic">
         Item Measurement
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={(e) => setItemMeasure('pcs')}>
-         
+        <Dropdown.Item >
+          <Button type='submit'
+           onClick={(e) => setItemMeasure('pcs')}>
             pcs
-    
+            </Button> 
           </Dropdown.Item>
         
       </Dropdown.Menu>

@@ -77,6 +77,9 @@ export default function GetItem() {
               </Button>
             </th>
             <th>
+              Item Measure
+            </th>
+            <th>
               Item Price
               <Button variant="link" onClick={sortItemsByPrice}>
                 <BsSortNumericDown />
@@ -99,6 +102,7 @@ export default function GetItem() {
                   <td>{item.id}</td>
                   <td>{item.itemName}</td>
                   <td>{item.itemQuantity}</td>
+                  <td>{item.itemMeasure}</td>
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
                   
@@ -115,6 +119,7 @@ export default function GetItem() {
                   <td>{item.id}</td>
                   <td>{item.itemName}</td>
                   <td>{item.itemQuantity}</td>
+                  <td>{item.itemMeasure}</td>
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
                 

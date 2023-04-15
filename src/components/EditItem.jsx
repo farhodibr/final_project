@@ -11,14 +11,18 @@ export default function EditItem(props) {
   const [itemName, setItemName] = useState(item.itemName);
   const [itemPrice, setItemPrice] = useState(item.itemPrice);
   const [itemQuantity, setItemQuantity] = useState(item.itemQuantity);
+  const [itemMeasure, setItemMeasure] = useState(item.itemMeasure);
   const [itemTotalPrice, setItemTotalPrice] = useState(item.itemTotalPrice);
   const [showModal, setShowModal] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
+
+ 
 
   const formattedPrice = Number(itemPrice).toLocaleString("en-US", {
     style: "currency",
@@ -33,20 +37,22 @@ export default function EditItem(props) {
   const handleEdit = (event, id) => {
     id = ID;
     
-    // event.preventDefault();
+    event.preventDefault();
     console.log("Edit item with id:", id);
 
 
     axios
       .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${id}`, {
         itemName,
-        itemPrice: formattedPrice,
+        itemPrice,
         itemQuantity,
+        itemMeasure,
         itemTotalPrice: formattedTotalPrice,
       })
       .then((res) => {
         console.log(res);
         handleCloseModal();
+        setShouldRender(true); // Set state variable to true to trigger re-render
         const updatedData = APIdata.map((item) => {
           if (item.id === id) {
             return res.data;
@@ -54,9 +60,11 @@ export default function EditItem(props) {
           return item;
         });
         setAPIdata(updatedData);
+       
       })
       .catch((err) => {
         console.log(err);
+        setShouldRender(true); // Set state variable to true to trigger re-render
       });
   };
 

@@ -1,6 +1,7 @@
 import { event } from "jquery";
 import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 import EditItem from "./EditItem";
 import ItemMeasure from "./DropdownItemPackage";
@@ -16,7 +17,7 @@ export default function CreateItem(props) {
   const [itemImage, setItemImage] = useState("");
   const [itemCategory, setItemCategory] = useState("");
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
-  const [itemMeasure, setItemMeasure] = useState(props.measure);
+  const [itemMeasure, setItemMeasure] = useState('');
 
   // Using useEffect hook to update total price when price or quantity changes
 
@@ -86,7 +87,35 @@ export default function CreateItem(props) {
         </Col>
         <Col>
         <br />
-          <ItemMeasure />
+        <Dropdown>
+   
+   <Dropdown.Toggle variant="success" id="dropdown-basic">
+     Item Measurement
+   </Dropdown.Toggle>
+
+   <Dropdown.Menu>
+     <Dropdown.Item >
+       <Button type='submit'
+        onClick={(e) => setItemMeasure('pcs')}>
+         pcs
+         </Button> 
+       </Dropdown.Item>
+       <Dropdown.Item >
+       <Button type='submit'
+        onClick={(e) => setItemMeasure('cases')}>
+         cases
+         </Button> 
+       </Dropdown.Item>
+       <Dropdown.Item >
+       <Button type='submit'
+        onClick={(e) => setItemMeasure('lbs')}>
+         lbs
+         </Button> 
+       </Dropdown.Item>
+     
+   </Dropdown.Menu>
+ 
+ </Dropdown>
         </Col>
         <Col>
           Enter Item Price
