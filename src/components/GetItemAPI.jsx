@@ -5,6 +5,7 @@ import EditItem from "./EditItem";
 import { BsSortAlphaDown } from "react-icons/bs";
 import { BsSortNumericDown } from "react-icons/bs";
 import Comments from "./ItemComment";
+import DeleteItem from "./DeleteItem";
 
 export default function GetItem() {
   const [APIdata, setAPIdata] = useState([]);
@@ -91,8 +92,10 @@ export default function GetItem() {
                 <BsSortNumericDown />
               </Button>
             </th>
-            <th>Edit</th>
             <th>Comment</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -106,11 +109,15 @@ export default function GetItem() {
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
                   
+                  
+                  <td>
+                    <Comments itemID={item} />
+                  </td>
                   <td>
                     <EditItem item={item} />
                   </td>
                   <td>
-                    <Comments itemID={item} />
+                    <DeleteItem item={item} />
                   </td>
                 </tr>
               ))
@@ -123,11 +130,15 @@ export default function GetItem() {
                   <td>{item.itemPrice}</td>
                   <td>{item.itemTotalPrice}</td>
                 
+                 
+                  <td>
+                    <Comments itemID={item} />
+                  </td>
                   <td>
                     <EditItem item={item} />
                   </td>
                   <td>
-                    <Comments itemID={item} />
+                    <DeleteItem item={item} />
                   </td>
                 </tr>
               ))}
