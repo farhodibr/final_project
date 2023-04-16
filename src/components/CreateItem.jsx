@@ -13,15 +13,12 @@ export default function CreateItem(props) {
   const [itemQuantity, setItemQuantity] = useState(0);
   const [itemTotalPrice, setItemTotalPrice] = useState(0);
   const [itemComment, setItemComment] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  const [itemImage, setItemImage] = useState("");
-  const [itemCategory, setItemCategory] = useState("");
+
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
-  const [itemMeasure, setItemMeasure] = useState('');
+  const [itemMeasure, setItemMeasure] = useState("");
 
   // Using useEffect hook to update total price when price or quantity changes
 
- 
   // Defining function to post item data to API
   const postItem = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -30,10 +27,14 @@ export default function CreateItem(props) {
       style: "currency",
       currency: "USD",
     });
-    const formattedTotalPrice = Number(itemPrice * itemQuantity).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
+    
+    const formattedTotalPrice = Number(itemPrice * itemQuantity).toLocaleString(
+      "en-US",
+      {
+        style: "currency",
+        currency: "USD",
+      }
+    );
 
     const formattedItemName = itemName.toUpperCase();
     // Using axios to post item data to mock API
@@ -86,36 +87,30 @@ export default function CreateItem(props) {
           />
         </Col>
         <Col>
-        <br />
-        <Dropdown>
-   
-   <Dropdown.Toggle variant="success" id="dropdown-basic">
-     Item Measurement
-   </Dropdown.Toggle>
+          <br />
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              Item Measurement
+            </Dropdown.Toggle>
 
-   <Dropdown.Menu>
-     <Dropdown.Item >
-       <Button type='submit'
-        onClick={(e) => setItemMeasure('pcs')}>
-         pcs
-         </Button> 
-       </Dropdown.Item>
-       <Dropdown.Item >
-       <Button type='submit'
-        onClick={(e) => setItemMeasure('cases')}>
-         cases
-         </Button> 
-       </Dropdown.Item>
-       <Dropdown.Item >
-       <Button type='submit'
-        onClick={(e) => setItemMeasure('lbs')}>
-         lbs
-         </Button> 
-       </Dropdown.Item>
-     
-   </Dropdown.Menu>
- 
- </Dropdown>
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <Button type="submit" onClick={(e) => setItemMeasure("pcs")}>
+                  pcs
+                </Button>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Button type="submit" onClick={(e) => setItemMeasure("cases")}>
+                  cases
+                </Button>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Button type="submit" onClick={(e) => setItemMeasure("lbs")}>
+                  lbs
+                </Button>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Col>
         <Col>
           Enter Item Price
@@ -129,18 +124,22 @@ export default function CreateItem(props) {
         </Col>
         <Col>
           Item Total Price {itemTotalPrice}
-          <Form.Control placeholder="Price" value={itemTotalPrice} /> 
+          <Form.Control placeholder="Price" value={itemTotalPrice} />
         </Col>
         <Col>
           Leave comment
-          <Form.Control 
-          placeholder="Comment" 
-          value={itemComment} 
-          onChange={(event) => {
-            setItemComment(event.target.value); // Updates itemComment state with input value
-          }} /> 
+          <Form.Control
+            placeholder="Comment"
+            value={itemComment}
+            onChange={(event) => {
+              setItemComment(event.target.value); // Updates itemComment state with input value
+            }}
+          />
         </Col>
-        <Button type="submit" onClick={postItem} /* Calls postItem function when button is clicked*/> 
+        <Button
+          type="submit"
+          onClick={postItem} /* Calls postItem function when button is clicked*/
+        >
           Submit
         </Button>
       </Row>

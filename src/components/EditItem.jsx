@@ -90,7 +90,7 @@ export default function EditItem(props) {
                 }}
                 type="text"
                 placeholder="Enter item name"
-                defaultValue={selectedItem ? selectedItem.itemName : itemName}
+                defaultValue={selectedItem ? selectedItem.itemName : itemName /*sets ddefault value to the selected item name*/}
               />
             </Form.Group>
 
@@ -102,7 +102,7 @@ export default function EditItem(props) {
                 }}
                 type="number"
                 placeholder="Enter item price"
-                defaultValue={selectedItem ? selectedItem.itemPrice : ""}
+                defaultValue={selectedItem ? selectedItem.itemPrice : "" /*sets ddefault value to the selected item price*/}
 
               />
             </Form.Group>
@@ -115,7 +115,7 @@ export default function EditItem(props) {
                 }}
                 type="number"
                 placeholder="Enter item quantity"
-                defaultValue={selectedItem ? selectedItem.itemQuantity : ""}
+                defaultValue={selectedItem ? selectedItem.itemQuantity : "" /* sets ddefault value to the selected item quantity*/}
               />
             </Form.Group>
             <Form.Group controlId="formBasicItemQuantity">

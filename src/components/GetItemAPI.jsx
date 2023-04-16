@@ -66,7 +66,7 @@ export default function GetItem() {
     <>
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr className="">
             <th>ID</th>
             <th>
               Item Name{" "}
