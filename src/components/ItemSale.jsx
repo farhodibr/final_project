@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 
+// This component is used to display the sales data
+// and to allow the user to edit the data
+// and save it to the API
+// I'm still working on the save function
+
 export default function Sales() {
   const [salesData, setSalesData] = useState([]);
 
