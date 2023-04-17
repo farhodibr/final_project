@@ -6,6 +6,7 @@ import { BsSortAlphaDown } from "react-icons/bs";
 import { BsSortNumericDown } from "react-icons/bs";
 import Comments from "./ItemComment";
 import DeleteItem from "./DeleteItem";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 export default function GetItem() {
   // Create state variables
@@ -13,6 +14,8 @@ export default function GetItem() {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [sortedItems, setSortedItems] = useState([]);
+  const [count, setCount] = useState(0);
+  const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
 
   const handleCloseModal = () => setShowModal(false);
 
@@ -50,6 +53,8 @@ export default function GetItem() {
     setSortedItems(sorted);
   };
 
+
+
   // Get data from API
   useEffect(() => {
     axios
@@ -59,6 +64,7 @@ export default function GetItem() {
       })
       .catch((err) => {
         console.log(err);
+        setShouldRender(true); // Set state variable to true to trigger re-render
       });
   }, []);
 

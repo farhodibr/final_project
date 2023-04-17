@@ -5,13 +5,14 @@ import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 import EditItem from "./EditItem";
 import ItemMeasure from "./DropdownItemPackage";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export default function CreateItem(props) {
   // Sets up state variables using useState hook
   const [itemName, setItemName] = useState("");
-  const [itemPrice, setItemPrice] = useState(0);
-  const [itemQuantity, setItemQuantity] = useState(0);
-  const [itemTotalPrice, setItemTotalPrice] = useState(0);
+  const [itemPrice, setItemPrice] = useState(null);
+  const [itemQuantity, setItemQuantity] = useState(null);
+  const [itemTotalPrice, setItemTotalPrice] = useState(null);
   const [itemComment, setItemComment] = useState("");
 
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
@@ -87,6 +88,7 @@ export default function CreateItem(props) {
           />
         </Col>
         <Col>
+        
           <br />
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">

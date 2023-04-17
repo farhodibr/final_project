@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 
-export default function ItemMeasure() {
+export default function ItemMeasure({id}) {
   const [itemMeasure, setItemMeasure] = useState('');
 
   const handleSelect = (e) => {

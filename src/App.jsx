@@ -1,5 +1,6 @@
 import CreateItem from "./components/CreateItem";
 import GetItemAPI from "./components/GetItemAPI";
+import ItemSale from "./components/ItemSale";
 import {
   BrowserRouter as Router, // Renames BrowserRouter as Router
   Routes,
@@ -43,8 +44,16 @@ function App() {
                   Get Inventory
                 </Link>
               </Nav.Link>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item>Action</NavDropdown.Item>
+              <NavDropdown title="Sales" id="basic-nav-dropdown">
+                <NavDropdown.Item>
+                <Link
+                  to="/item-sale"/* Creates a link to the ItemSale component*/
+                >
+                  {" "}
+                  Sold Items
+                </Link>
+                
+                  </NavDropdown.Item>
                 <NavDropdown.Item>Another action</NavDropdown.Item>
                 <NavDropdown.Item>Something</NavDropdown.Item>
                 <NavDropdown.Divider />
@@ -67,6 +76,12 @@ function App() {
           element={
             <GetItemAPI />
           } /* Adds a route for the GetItemAPI component*/
+        />
+        <Route
+          path="/item-sale"
+          element={
+            <ItemSale />
+          } /* Adds a route for the ItemSale component*/
         />
       </Routes>
     </Router> // Closes the BrowserRouter component
