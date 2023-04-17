@@ -20,11 +20,14 @@ export default function Sales() {
     const updatedSalesData = [...salesData];
     updatedSalesData[rowIndex][property] = event.target.value;
     setSalesData(updatedSalesData);
+    console.log(updatedSalesData);
+    console.log(salesData);
   };
 
   const handleSave = () => {
     axios
-      .put("https://64095fb26ecd4f9e18aec05b.mockapi.io/Sales", salesData)
+      .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Sales", 
+      salesData)
       .then((response) => {
         console.log(response);
       })
