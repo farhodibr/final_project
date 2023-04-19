@@ -9,6 +9,14 @@ import axios from "axios";
 
 export default function Sales() {
   const [salesData, setSalesData] = useState([]);
+  const [soldItemQuantity, setSoldItemQuantity] = useState(0);
+  const [soldItemPrice, setSoldItemPrice] = useState(0);
+  const [soldItemTotalPrice, setSoldItemTotalPrice] = useState(0);
+  const [soldItemName, setSoldItemName] = useState("");
+  const [salesDate, setSalesDate] = useState("");
+  const [itemQuantity, setItemQuantity] = useState(salesData.itemQuantity);
+
+  
 
   useEffect(() => {
     axios
@@ -24,32 +32,50 @@ export default function Sales() {
   const handleCellChange = (event, rowIndex, property) => {
     const updatedSalesData = [...salesData];
     updatedSalesData[rowIndex][property] = event.target.value;
+    updatedSalesData[rowIndex].ItemQuantity = updatedSalesData[rowIndex].ItemQuantity - updatedSalesData[rowIndex].soldItemQuantity;
     setSalesData(updatedSalesData);
     console.log(updatedSalesData);
     console.log(salesData);
+    setSoldItemQuantity(updatedSalesData[rowIndex].soldItemQuantity);
+
+    
   };
 
-  const handleSave = () => {
-    axios
-      .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Sales", 
-      salesData)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleItemSold = (event) => {
+    setSoldItemQuantity(event.target.value);
+    
+    item.itemQuantity = item.itemQuantity - soldItemQuantity;
   };
+
+
+
+  const handleSave = () => {
+    salesData.forEach(item => {
+      const updatedQuantity = item.itemQuantity - item.soldItemQuantity;
+      const updatedItem = { ...item, itemQuantity: updatedQuantity };
+      axios
+        .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`, updatedItem)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    });
+  };
+  
 
   return (
     <>
+      <h1>Sales</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>Item</th>
             <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
+            <th>Inventory</th>
+            <th>Sold Today</th>
+            <th>Total Sales</th>
           </tr>
         </thead>
         <tbody>
@@ -75,14 +101,24 @@ export default function Sales() {
               </td>
               <td>
                 <input
+                
                   type="number"
-                  value={item.itemQuantity}
+                  value={item.itemQuantity - item.soldItemQuantity}
                   onChange={(event) =>
-                    handleCellChange(event, rowIndex, "itemQuantity")
+                    handleCellChange(event, rowIndex, "itemPrice")
                   }
                 />
               </td>
-              <td>{item.itemTotalPrice}</td>
+              <td>
+                <input
+                  type="number"
+                 
+                  onChange={(event) =>
+                    handleCellChange(event, rowIndex, "soldItemQuantity")
+                  }
+                />
+              </td>
+              <td></td>
             </tr>
           ))}
         </tbody>
@@ -93,3 +129,4 @@ export default function Sales() {
     </>
   );
 }
+

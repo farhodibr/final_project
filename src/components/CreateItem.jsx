@@ -14,6 +14,11 @@ export default function CreateItem(props) {
   const [itemQuantity, setItemQuantity] = useState(null);
   const [itemTotalPrice, setItemTotalPrice] = useState(null);
   const [itemComment, setItemComment] = useState("");
+  const [soldItemQuantity, setSoldItemQuantity] = useState(0);
+  const [soldItemPrice, setSoldItemPrice] = useState(0);
+  const [soldItemTotalPrice, setSoldItemTotalPrice] = useState(0);
+  const [soldItemName, setSoldItemName] = useState("");
+  const [salesDate, setSalesDate] = useState("");
 
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
   const [itemMeasure, setItemMeasure] = useState("");
@@ -47,6 +52,11 @@ export default function CreateItem(props) {
         itemTotalPrice: formattedTotalPrice,
         itemComment,
         itemMeasure,
+        soldItemName,
+        soldItemPrice,
+        soldItemQuantity,
+        soldItemTotalPrice,
+        salesDate,
       })
       .then((res) => {
         setItemPrice(0); // Resets itemPrice state to 0
