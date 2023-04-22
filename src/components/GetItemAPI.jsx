@@ -54,6 +54,17 @@ export default function GetItem() {
   };
 
 
+  function GetData() {
+    axios
+    .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
+    .then((res) => {
+      setAPIdata(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      setShouldRender(true); // Set state variable to true to trigger re-render
+    });
+  }
 
   // Get data from API
   useEffect(() => {
@@ -146,7 +157,7 @@ export default function GetItem() {
                     <Comments itemID={item} /* passing props to Comments component*/ />
                   </td>
                   <td>
-                    <EditItem item={item} /* passing props to EditItem component*/ />
+                    <EditItem item={item} getData={GetData } /* passing props to EditItem component*/ />
                   </td>
                   <td>
                     <DeleteItem item={item} /* passing props to DeleteItem component*/  />

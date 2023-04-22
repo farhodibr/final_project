@@ -52,7 +52,8 @@ export default function Sales() {
   const handleSave = () => {
     salesData.forEach(item => {
       const updatedQuantity = item.itemQuantity - item.soldItemQuantity;
-      const updatedItem = { ...item, itemQuantity: updatedQuantity };
+      const updatedRemainingTotal = item.itemPrice * item.ItemQuantity;
+      const updatedItem = { ...item, itemQuantity: updatedQuantity, itemTotalPrice: updatedRemainingTotal };
       axios
         .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`, updatedItem)
         .then(response => {
