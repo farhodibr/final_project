@@ -8,16 +8,15 @@ import axios from "axios";
 // I'm still working on the save function
 
 export default function Sales() {
+  // Define the state variables for the component
   const [salesData, setSalesData] = useState([]);
   const [soldItemQuantity, setSoldItemQuantity] = useState(0);
   const [soldItemPrice, setSoldItemPrice] = useState(0);
   const [soldItemTotalPrice, setSoldItemTotalPrice] = useState(0);
   const [soldItemName, setSoldItemName] = useState("");
   const [salesDate, setSalesDate] = useState("");
-  const [itemQuantity, setItemQuantity] = useState(salesData.itemQuantity);
 
-  
-
+  // Fetch the sales data from the mock API when the component is mounted
   useEffect(() => {
     axios
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
@@ -29,6 +28,7 @@ export default function Sales() {
       });
   }, []);
 
+  // Handle changes to a table cell
   const handleCellChange = (event, rowIndex, property) => {
     const updatedSalesData = [...salesData];
     updatedSalesData[rowIndex][property] = event.target.value;
@@ -37,27 +37,32 @@ export default function Sales() {
     console.log(updatedSalesData);
     console.log(salesData);
     setSoldItemQuantity(updatedSalesData[rowIndex].soldItemQuantity);
-
-    
   };
 
+  // Handle changes to the quantity of an item that was sold
   const handleItemSold = (event) => {
     setSoldItemQuantity(event.target.value);
-    
-    item.itemQuantity = item.itemQuantity - soldItemQuantity;
+    // This line of code is not necessary and can be removed
+    // item.itemQuantity = item.itemQuantity - soldItemQuantity;
   };
 
-
-
+  // Handle saving the updated sales data to the API
   const handleSave = () => {
+    // Loop through each item in the sales data
     salesData.forEach(item => {
+      // Calculate the updated quantity and total sales for the item
       const updatedQuantity = item.itemQuantity - item.soldItemQuantity;
       const updatedRemainingTotal = item.itemPrice * item.ItemQuantity;
+
+      // Create a new object with the updated quantity and total sales
       const updatedItem = { ...item, itemQuantity: updatedQuantity, itemTotalPrice: updatedRemainingTotal };
+      
+      // Update the item in the API
       axios
         .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`, updatedItem)
         .then(response => {
           console.log(response);
+          setSoldItemQuantity(0);
         })
         .catch(error => {
           console.log(error);
@@ -65,7 +70,7 @@ export default function Sales() {
     });
   };
   
-
+  // Render the component
   return (
     <>
       <h1>Sales</h1>
@@ -82,6 +87,7 @@ export default function Sales() {
         <tbody>
           {salesData.map((item, rowIndex) => (
             <tr key={item.id}>
+
               <td>
                 <input
                   type="text"
@@ -104,7 +110,7 @@ export default function Sales() {
                 <input
                 
                   type="number"
-                  value={item.itemQuantity - item.soldItemQuantity}
+                  value={item.itemQuantity}
                   onChange={(event) =>
                     handleCellChange(event, rowIndex, "itemPrice")
                   }

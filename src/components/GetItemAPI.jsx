@@ -7,6 +7,7 @@ import { BsSortNumericDown } from "react-icons/bs";
 import Comments from "./ItemComment";
 import DeleteItem from "./DeleteItem";
 import { propTypes } from "react-bootstrap/esm/Image";
+import ItemSale from "./ItemSale";
 
 export default function GetItem() {
   // Create state variables
@@ -157,7 +158,8 @@ export default function GetItem() {
                     <Comments itemID={item} /* passing props to Comments component*/ />
                   </td>
                   <td>
-                    <EditItem item={item} getData={GetData } /* passing props to EditItem component*/ />
+                    <EditItem item={item} getData={GetData} /* passing props to EditItem component*/ />
+                    
                   </td>
                   <td>
                     <DeleteItem item={item} /* passing props to DeleteItem component*/  />
