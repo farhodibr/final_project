@@ -22,6 +22,7 @@ export default function Sales() {
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
       .then((response) => {
         setSalesData(response.data);
+        console.log(response.data); 
       })
       .catch((error) => {
         console.log(error);
