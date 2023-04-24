@@ -32,43 +32,39 @@ export default function Sales() {
   // Handle changes to a table cell
   const handleCellChange = (event, rowIndex, property) => {
     const updatedSalesData = [...salesData];
-    updatedSalesData[rowIndex][property] = event.target.value;
-    updatedSalesData[rowIndex].ItemQuantity = updatedSalesData[rowIndex].ItemQuantity - updatedSalesData[rowIndex].soldItemQuantity;
+    const updatedItem = updatedSalesData[rowIndex];
+    // Update the property value with the new value from the table cell
+    if (property === "soldItemQuantity") {
+      const soldItemQuantity = parseInt(event.target.value, 10);
+      const remainingItemQuantity = updatedItem.itemQuantity - soldItemQuantity;
+      updatedItem.itemQuantity = remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
+    } else {
+      updatedItem[property] = event.target.value;
+    }
+  
     setSalesData(updatedSalesData);
-    console.log(updatedSalesData);
-    console.log(salesData);
-    setSoldItemQuantity(updatedSalesData[rowIndex].soldItemQuantity);
   };
 
-  // Handle changes to the quantity of an item that was sold
-  const handleItemSold = (event) => {
-    setSoldItemQuantity(event.target.value);
-    // This line of code is not necessary and can be removed
-    // item.itemQuantity = item.itemQuantity - soldItemQuantity;
-  };
-
-  // Handle saving the updated sales data to the API
+  // Handle save button click
   const handleSave = () => {
-    // Loop through each item in the sales data
-    salesData.forEach(item => {
-      // Calculate the updated quantity and total sales for the item
-      const updatedQuantity = item.itemQuantity - item.soldItemQuantity;
-      const updatedRemainingTotal = item.itemPrice * item.ItemQuantity;
-
-      // Create a new object with the updated quantity and total sales
-      const updatedItem = { ...item, itemQuantity: updatedQuantity, itemTotalPrice: updatedRemainingTotal };
-      
-      // Update the item in the API
-      axios
-        .put(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`, updatedItem)
-        .then(response => {
-          console.log(response);
-          setSoldItemQuantity(0);
-        })
-        .catch(error => {
-          console.log(error);
+    const updatePromises = salesData.map(item => {
+      // Delete all properties 
+      return axios.delete(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`)
+        .then(() => {
+          // Add back the updated properties 
+          return axios.post(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory`, item);
         });
     });
+
+    // Wait for all updates to complete
+    Promise.all(updatePromises)
+      .then(() => {
+        console.log("All updates completed successfully");
+      })
+      .catch(error => {
+        console.log("One or more updates failed");
+        console.log(error);
+      });
   };
   
   // Render the component
@@ -113,7 +109,7 @@ export default function Sales() {
                   type="number"
                   value={item.itemQuantity}
                   onChange={(event) =>
-                    handleCellChange(event, rowIndex, "itemPrice")
+                    handleCellChange(event, rowIndex, "itemQuantity")
                   }
                 />
               </td>
@@ -126,7 +122,7 @@ export default function Sales() {
                   }
                 />
               </td>
-              <td></td>
+             
             </tr>
           ))}
         </tbody>
