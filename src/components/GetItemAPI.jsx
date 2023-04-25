@@ -81,20 +81,20 @@ export default function GetItem() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <Table striped bordered hover>
         <thead>
           <tr className="">
             <th>ID</th>
             <th>
               Item Name{" "}
-              <Button variant="link" onClick={sortItemsByName}>
+              <Button variant="light" className="btn-sm" onClick={sortItemsByName}>
                 <BsSortAlphaDown />
               </Button>
             </th>
             <th>
-              Item Quantity
-              <Button variant="link" onClick={sortItemsByQuantity}>
+              Item Quantity{" "}
+              <Button variant="light" className="btn-sm" onClick={sortItemsByQuantity}>
                 <BsSortNumericDown />
               </Button>
             </th>
@@ -102,14 +102,14 @@ export default function GetItem() {
               Item Measure
             </th>
             <th>
-              Item Price
-              <Button variant="link" onClick={sortItemsByPrice}>
+              Item Price{" "}
+              <Button variant="light" className="btn-sm" onClick={sortItemsByPrice}>
                 <BsSortNumericDown />
               </Button>
             </th>
             <th>
               Item Total Price
-              <Button type="sort" variant="link" onClick={sortItemsByTotal}>
+              <Button variant="light" className="btn-sm" onClick={sortItemsByTotal}>
                 <BsSortNumericDown />
               </Button>
             </th>
@@ -151,7 +151,7 @@ export default function GetItem() {
                   <td>{item.itemQuantity}</td>
                   <td>{item.itemMeasure}</td>
                   <td>{item.itemPrice}</td>
-                  <td>{item.itemTotalPrice}</td>
+                  <td>{item.itemPrice * item.itemQuantity}</td>
                 
                  
                   <td>
@@ -162,12 +162,12 @@ export default function GetItem() {
                     
                   </td>
                   <td>
-                    <DeleteItem item={item} /* passing props to DeleteItem component*/  />
+                    <DeleteItem item={item} getData={GetData} /* passing props to DeleteItem component*/  />
                   </td>
                 </tr>
               ))}
         </tbody>
       </Table>
-    </>
+    </div>
   );
 }

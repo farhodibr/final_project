@@ -5,7 +5,7 @@ import "../App.css";
 
 export default function DeleteItem(props) {
   // destructuring props
-  const { item, APIdata, setAPIdata } = props;
+  const { item, APIdata, setAPIdata, getData } = props;
   const [selectedItem, setSelectedItem] = useState(null);
   const [ID, setID] = useState(item.id);
  
@@ -36,6 +36,7 @@ export default function DeleteItem(props) {
       .then((res) => {
         console.log(res);
         handleCloseModal();
+        getData();
         setShouldRender(true); // Set state variable to true to trigger re-render
         
        
