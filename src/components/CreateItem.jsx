@@ -47,9 +47,9 @@ export default function CreateItem(props) {
     axios
       .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory", {
         itemName: formattedItemName,
-        itemPrice: formattedPrice,
+        itemPrice,
         itemQuantity,
-        itemTotalPrice: formattedTotalPrice,
+        itemTotalPrice,
         itemComment,
         itemMeasure,
         soldItemName,

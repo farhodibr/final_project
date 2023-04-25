@@ -99,7 +99,10 @@ export default function GetItem() {
               </Button>
             </th>
             <th>
-              Item Measure
+              Item Measure{" "}
+              <Button variant="light" className="btn-sm" onClick={sortItemsByName}>
+                <BsSortAlphaDown />
+              </Button>
             </th>
             <th>
               Item Price{" "}
@@ -129,7 +132,7 @@ export default function GetItem() {
                   <td>{item.itemQuantity}</td>
                   <td>{item.itemMeasure}</td>
                   <td>{item.itemPrice}</td>
-                  <td>{item.itemTotalPrice}</td>
+                  <td>{item.itemPrice * item.itemQuantity}</td>
                   
                   
                   <td>
