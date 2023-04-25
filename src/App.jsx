@@ -54,10 +54,7 @@ function App() {
                 </Link>
                 
                   </NavDropdown.Item>
-                <NavDropdown.Item>Another action</NavDropdown.Item>
-                <NavDropdown.Item>Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item>Separated link</NavDropdown.Item>
+                
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
