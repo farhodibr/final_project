@@ -46,26 +46,23 @@ export default function Sales() {
   };
 
   // Handle save button click
-  const handleSave = () => {
-    const updatePromises = salesData.map(item => {
-      // Delete all properties 
-      return axios.delete(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`)
-        .then(() => {
-          // Add back the updated properties 
-          return axios.post(`https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory`, item);
-        });
-    });
-
-    // Wait for all updates to complete
-    Promise.all(updatePromises)
-      .then(() => {
-        console.log("All updates completed successfully");
-      })
-      .catch(error => {
-        console.log("One or more updates failed");
-        console.log(error);
-      });
+  const handleSave = async () => {
+    try {
+      const promises = salesData.map((item) =>
+        axios.put(
+          `https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory/${item.id}`,
+          item
+        )
+      );
+      await axios.all(promises);
+      console.log("All updates completed successfully");
+    } catch (error) {
+      console.log("One or more updates failed");
+      console.log(error);
+    }
   };
+  
+
   
   // Render the component
   return (
