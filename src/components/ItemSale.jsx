@@ -16,6 +16,7 @@ export default function Sales() {
   const [soldItemTotalPrice, setSoldItemTotalPrice] = useState(0);
   const [soldItemName, setSoldItemName] = useState("");
   const [salesDate, setSalesDate] = useState("");
+  const [customerOrder, setCustomerOrder] = useState([]);
 
   // Fetch the sales data from the mock API when the component is mounted
   useEffect(() => {
@@ -36,13 +37,35 @@ export default function Sales() {
     const updatedItem = updatedSalesData[rowIndex];
     // Update the property value with the new value from the table cell
     if (property === "soldItemQuantity") {
-      const soldItemQuantity = parseInt(event.target.value, 10);
+      const soldItemQuantityInput = parseInt(event.target.value, 10);
+      const soldItemQuantity = isNaN(soldItemQuantityInput);
       const remainingItemQuantity = updatedItem.itemQuantity - soldItemQuantity;
       updatedItem.itemQuantity =
         remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
     } else {
       updatedItem[property] = event.target.value;
     }
+    // Update the sales data state with the updated item
+    if (property === "soldItemQuantity") {
+      const soldItemQuantity = parseInt(event.target.value, 10);
+      //const remainingItemQuantity = updatedItem.itemQuantity - event.target.value;
+      //updatedItem.itemQuantity = remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
+      if (soldItemQuantity > 0) {
+        // Add the sold item to the customer order
+        const customerOrderItem = {
+          id: updatedItem.id,
+          itemName: updatedItem.itemName,
+          soldItemQuantity: event.target.value,
+          soldItemPrice: updatedItem.itemPrice,
+          soldItemTotalPrice: updatedItem.itemPrice * event.target.value,
+        };
+        // push the sold item to the customerOrder array
+          customerOrder.push(customerOrderItem);
+        // setCustomerOrder((prevOrder) => [...prevOrder, customerOrderItem]);
+        console.log(customerOrder);
+      }
+    }
+    
 
     setSalesData(updatedSalesData);
   };
@@ -69,7 +92,7 @@ export default function Sales() {
     <div className="fade-in">
       <br />
       <h1>Sales</h1>
-      <CreateCustomer />
+      <CreateCustomer  />
 
       <Table striped bordered hover>
         <thead>
