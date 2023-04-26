@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 import CreateCustomer from "./CustomerInfo";
+
 
 // This component is used to display the sales data
 // and to allow the user to edit the data
@@ -16,7 +17,13 @@ export default function Sales() {
   const [soldItemTotalPrice, setSoldItemTotalPrice] = useState(0);
   const [soldItemName, setSoldItemName] = useState("");
   const [salesDate, setSalesDate] = useState("");
+
+  const customerOrderRef = useRef([]);
   const [customerOrder, setCustomerOrder] = useState([]);
+
+  useEffect(() => {
+    customerOrderRef.current = customerOrder;
+  }, [customerOrder]);
 
   // Fetch the sales data from the mock API when the component is mounted
   useEffect(() => {
@@ -32,43 +39,48 @@ export default function Sales() {
   }, []);
 
   // Handle changes to a table cell
-  const handleCellChange = (event, rowIndex, property) => {
-    const updatedSalesData = [...salesData];
-    const updatedItem = updatedSalesData[rowIndex];
-    // Update the property value with the new value from the table cell
-    if (property === "soldItemQuantity") {
-      const soldItemQuantityInput = parseInt(event.target.value, 10);
-      const soldItemQuantity = isNaN(soldItemQuantityInput);
-      const remainingItemQuantity = updatedItem.itemQuantity - soldItemQuantity;
-      updatedItem.itemQuantity =
-        remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
-    } else {
-      updatedItem[property] = event.target.value;
-    }
-    // Update the sales data state with the updated item
-    if (property === "soldItemQuantity") {
-      const soldItemQuantity = parseInt(event.target.value, 10);
-      //const remainingItemQuantity = updatedItem.itemQuantity - event.target.value;
-      //updatedItem.itemQuantity = remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
-      if (soldItemQuantity > 0) {
-        // Add the sold item to the customer order
-        const customerOrderItem = {
-          id: updatedItem.id,
-          itemName: updatedItem.itemName,
-          soldItemQuantity: event.target.value,
-          soldItemPrice: updatedItem.itemPrice,
-          soldItemTotalPrice: updatedItem.itemPrice * event.target.value,
-        };
-        // push the sold item to the customerOrder array
-          customerOrder.push(customerOrderItem);
-        // setCustomerOrder((prevOrder) => [...prevOrder, customerOrderItem]);
-        console.log(customerOrder);
-      }
-    }
-    
+  const handleCellChange = 
+    useCallback(
+      (event, rowIndex, property) => {
+        const updatedSalesData = [...salesData];
+        const updatedItem = updatedSalesData[rowIndex];
+        // Update the property value with the new value from the table cell
+        if (property === "soldItemQuantity") {
+          const soldItemQuantityInput = parseInt(event.target.value, 10);
+          const soldItemQuantity = isNaN(soldItemQuantityInput);
+          const remainingItemQuantity =
+            updatedItem.itemQuantity - soldItemQuantity;
+          updatedItem.itemQuantity =
+            remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
+        } else {
+          updatedItem[property] = event.target.value;
+        }
+        // Update the sales data state with the updated item
+        if (property === "soldItemQuantity") {
+          const soldItemQuantity = parseInt(event.target.value, 10);
+          //const remainingItemQuantity = updatedItem.itemQuantity - event.target.value;
+          //updatedItem.itemQuantity = remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
+          if (soldItemQuantity > 0) {
+            // Add the sold item to the customer order
+            const customerOrderItem = {
+              id: updatedItem.id,
+              itemName: updatedItem.itemName,
+              soldItemQuantity: event.target.value,
+              soldItemPrice: updatedItem.itemPrice,
+              soldItemTotalPrice: updatedItem.itemPrice * event.target.value,
+            };
+            // push the sold item to the customerOrder array
+            customerOrderRef.current.push(customerOrderItem);
+            setCustomerOrder(customerOrderRef.current);
+            // setCustomerOrder((prevOrder) => [...prevOrder, customerOrderItem]);
+            console.log(customerOrder);
+          }
+        }
 
-    setSalesData(updatedSalesData);
-  };
+        setSalesData(updatedSalesData);
+      },
+      [salesData]
+    );
 
   // Handle save button click
   const handleSave = async () => {
@@ -92,7 +104,7 @@ export default function Sales() {
     <div className="fade-in">
       <br />
       <h1>Sales</h1>
-      <CreateCustomer  />
+      <CreateCustomer />
 
       <Table striped bordered hover>
         <thead>
