@@ -1,6 +1,7 @@
 import CreateItem from "./components/CreateItem";
 import GetItemAPI from "./components/GetItemAPI";
 import ItemSale from "./components/ItemSale";
+import BlockMenu from "./components/BlockMenu";
 import {
   BrowserRouter as Router, // Renames BrowserRouter as Router
   Routes,
@@ -18,6 +19,7 @@ import "./index.css";
 
 function App() {
   return (
+    <div className="container">
     <Router /* Wrap your app in a BrowserRouter component*/>
       <Navbar className="Navbar" bg="green" expand="lg">
         <Container>
@@ -81,7 +83,15 @@ function App() {
           } /* Adds a route for the ItemSale component*/
         />
       </Routes>
-    </Router> // Closes the BrowserRouter component
+    
+
+    
+    </Router>
+    <div className="grid">
+
+    </div>
+    </div>
+    
   );
 }
 

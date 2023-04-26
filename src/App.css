@@ -66,3 +66,70 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 9999;
 }
+
+.block-menu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.block {
+  margin: 0 40px 40px 0;
+  padding: 20px 10px;
+  border: none;
+  background-color: #5381ca;
+  cursor: pointer;
+}
+
+.block.active {
+  background-color: #ea8383;
+}
+
+/* styles.css */
+
+/* Set the background color of the page */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Style the navigation bar */
+.navbar {
+  background-color: #f7b1b1;
+  color: rgb(49, 38, 120);
+}
+
+/* Change the color of the active link */
+.nav-link.active {
+  color: #65ef56;
+}
+
+/* Set the font size and line height for the page title */
+.page-title {
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+/* Style the form for creating a new item */
+.create-item-form {
+  background-color: rgb(239, 214, 214);
+  border-radius: 5px;
+  padding: 40px;
+}
+
+/* Style the table for displaying the inventory */
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Set the background color and border for table cells */
+.inventory-table td {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Set the font size for table headers */
+.inventory-table th {
+  font-size: 18px;
+}

@@ -75,9 +75,9 @@ export default function CreateItem(props) {
 
   // Rendering form using React Bootstrap components
   return (
-    <Form>
+    <Form className="create-item-form">
       <Row>
-        <Col xs={3}>
+        <Col xs={2}>
           Enter Item Name
           <Form.Control
             placeholder="Item Name"
@@ -87,7 +87,7 @@ export default function CreateItem(props) {
             }}
           />
         </Col>
-        <Col>
+        <Col xs={2}>
           Enter Item Quantity
           <Form.Control
             placeholder="Quantity"
@@ -97,11 +97,11 @@ export default function CreateItem(props) {
             }}
           />
         </Col>
-        <Col>
+        <Col xs={2}>
         
           <br />
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle variant="success" id="dropdown">
               Item Measurement
             </Dropdown.Toggle>
 
@@ -124,7 +124,7 @@ export default function CreateItem(props) {
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-        <Col>
+        <Col xs={2}>
           Enter Item Price
           <Form.Control
             placeholder="Price"
@@ -134,11 +134,11 @@ export default function CreateItem(props) {
             }}
           />
         </Col>
-        <Col>
+        <Col xs={2}>
           Item Total Price {itemTotalPrice}
           <Form.Control placeholder="Price" value={itemTotalPrice} />
         </Col>
-        <Col>
+        <Col xs={2}>
           Leave comment
           <Form.Control
             placeholder="Comment"

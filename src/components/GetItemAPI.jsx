@@ -81,10 +81,10 @@ export default function GetItem() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container inventory-table">
       <Table striped bordered hover>
         <thead>
-          <tr className="">
+          <tr className="inventory-table th">
             <th>ID</th>
             <th>
               Item Name{" "}
