@@ -70,6 +70,7 @@ export default function Sales() {
   // Render the component
   return (
     <div className="fade-in">
+      <br />
       <h1>Sales</h1>
       <Table striped bordered hover>
         <thead>

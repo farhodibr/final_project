@@ -36,7 +36,7 @@ function App() {
                   to="/create-item" /* Creates a link to the CreateItem component*/
                 >
                   {" "}
-                  Create Item
+                  Add Item
                 </Link>
               </Nav.Link>
               <Nav.Link>
@@ -44,21 +44,18 @@ function App() {
                   to="/get-item-api" /* Creates a link to the GetItemAPI component*/
                 >
                   {" "}
-                  Get Inventory
+                  Inventory
                 </Link>
               </Nav.Link>
-              <NavDropdown title="Sales" id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                <Link
+              <Nav.Link>
+              <Link
                   to="/item-sale"/* Creates a link to the ItemSale component*/
                 >
                   {" "}
-                  Sold Items
+                  Sales
                 </Link>
-                
-                  </NavDropdown.Item>
-                
-              </NavDropdown>
+              </Nav.Link>
+              
             </Nav>
           </Navbar.Collapse>
         </Container>

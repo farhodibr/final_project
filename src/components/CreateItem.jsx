@@ -75,6 +75,9 @@ export default function CreateItem(props) {
 
   // Rendering form using React Bootstrap components
   return (
+    <div className=" fade-in">
+      <br />
+      <h1>Add an Item to Inventory</h1>
     <Form className="create-item-form fade-in">
       <Row>
         <Col xs={2}>
@@ -156,5 +159,6 @@ export default function CreateItem(props) {
         </Button>
       </Row>
     </Form>
+    </div>
   );
 }
