@@ -14,6 +14,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import "./App.css";
+import "./animation.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 

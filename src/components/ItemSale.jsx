@@ -69,7 +69,7 @@ export default function Sales() {
   
   // Render the component
   return (
-    <>
+    <div className="fade-in">
       <h1>Sales</h1>
       <Table striped bordered hover>
         <thead>
@@ -130,7 +130,7 @@ export default function Sales() {
       <Button variant="primary" onClick={handleSave}>
         Save
       </Button>
-    </>
+    </div>
   );
 }
 

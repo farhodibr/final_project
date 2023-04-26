@@ -81,7 +81,7 @@ export default function GetItem() {
   }, []);
 
   return (
-    <div className="container inventory-table">
+    <div className="container inventory-table fade-in">
       <Table striped bordered hover>
         <thead>
           <tr className="inventory-table th">

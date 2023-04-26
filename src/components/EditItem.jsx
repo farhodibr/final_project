@@ -73,7 +73,8 @@ export default function EditItem(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={() => handleShowModal(item)}>
+      <Button className="fade-in"
+      variant="primary" onClick={() => handleShowModal(item)}>
         Edit
       </Button>
 

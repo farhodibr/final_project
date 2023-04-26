@@ -75,7 +75,7 @@ export default function CreateItem(props) {
 
   // Rendering form using React Bootstrap components
   return (
-    <Form className="create-item-form">
+    <Form className="create-item-form fade-in">
       <Row>
         <Col xs={2}>
           Enter Item Name
