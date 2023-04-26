@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
+import CreateCustomer from "./CustomerInfo";
 
 // This component is used to display the sales data
 // and to allow the user to edit the data
@@ -22,7 +23,7 @@ export default function Sales() {
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
       .then((response) => {
         setSalesData(response.data);
-        console.log(response.data); 
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -37,11 +38,12 @@ export default function Sales() {
     if (property === "soldItemQuantity") {
       const soldItemQuantity = parseInt(event.target.value, 10);
       const remainingItemQuantity = updatedItem.itemQuantity - soldItemQuantity;
-      updatedItem.itemQuantity = remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
+      updatedItem.itemQuantity =
+        remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
     } else {
       updatedItem[property] = event.target.value;
     }
-  
+
     setSalesData(updatedSalesData);
   };
 
@@ -61,14 +63,14 @@ export default function Sales() {
       console.log(error);
     }
   };
-  
 
-  
   // Render the component
   return (
     <div className="fade-in">
       <br />
       <h1>Sales</h1>
+      <CreateCustomer />
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -82,7 +84,6 @@ export default function Sales() {
         <tbody>
           {salesData.map((item, rowIndex) => (
             <tr key={item.id}>
-
               <td>
                 <input
                   type="text"
@@ -103,7 +104,6 @@ export default function Sales() {
               </td>
               <td>
                 <input
-                
                   type="number"
                   value={item.itemQuantity}
                   onChange={(event) =>
@@ -114,13 +114,11 @@ export default function Sales() {
               <td>
                 <input
                   type="number"
-                 
                   onChange={(event) =>
                     handleCellChange(event, rowIndex, "soldItemQuantity")
                   }
                 />
               </td>
-             
             </tr>
           ))}
         </tbody>
@@ -131,4 +129,3 @@ export default function Sales() {
     </div>
   );
 }
-

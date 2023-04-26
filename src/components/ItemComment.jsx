@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import {  Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 
 export default function Comments(props) {
- 
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
@@ -20,8 +19,6 @@ export default function Comments(props) {
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Comment for {props.itemID.itemName}</Modal.Title>
-          
-
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -34,7 +31,6 @@ export default function Comments(props) {
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          
         </Modal.Footer>
       </Modal>
     </>

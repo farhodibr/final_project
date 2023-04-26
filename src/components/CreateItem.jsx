@@ -86,7 +86,7 @@ export default function CreateItem(props) {
             placeholder="Item Name"
             value={itemName}
             onChange={(event) => {
-              setItemName(event.target.value); // Updates itemName state with input value
+              setItemName(event.target.value); // Creates itemName state with input value
             }}
           />
         </Col>
@@ -96,7 +96,7 @@ export default function CreateItem(props) {
             placeholder="Quantity"
             value={itemQuantity}
             onChange={(event) => {
-              setItemQuantity(event.target.value); // Updates itemQuantity state with input value
+              setItemQuantity(event.target.value); // Creates itemQuantity state with input value
             }}
           />
         </Col>
@@ -133,7 +133,7 @@ export default function CreateItem(props) {
             placeholder="Price"
             value={itemPrice}
             onChange={(event) => {
-              setItemPrice(event.target.value); // Updates itemPrice state with input value
+              setItemPrice(event.target.value); // Creates itemPrice state with input value
             }}
           />
         </Col>

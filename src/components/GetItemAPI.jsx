@@ -54,17 +54,16 @@ export default function GetItem() {
     setSortedItems(sorted);
   };
 
-
   function GetData() {
     axios
-    .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
-    .then((res) => {
-      setAPIdata(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-      setShouldRender(true); // Set state variable to true to trigger re-render
-    });
+      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Inventory")
+      .then((res) => {
+        setAPIdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setShouldRender(true); // Set state variable to true to trigger re-render
+      });
   }
 
   // Get data from API
@@ -89,87 +88,117 @@ export default function GetItem() {
             <th>ID</th>
             <th>
               Item Name{" "}
-              <Button variant="light" className="btn-sm" onClick={sortItemsByName}>
+              <Button
+                variant="light"
+                className="btn-sm"
+                onClick={sortItemsByName}
+              >
                 <BsSortAlphaDown />
               </Button>
             </th>
             <th>
               Item Quantity{" "}
-              <Button variant="light" className="btn-sm" onClick={sortItemsByQuantity}>
+              <Button
+                variant="light"
+                className="btn-sm"
+                onClick={sortItemsByQuantity}
+              >
                 <BsSortNumericDown />
               </Button>
             </th>
             <th>
               Item Measure{" "}
-              <Button variant="light" className="btn-sm" onClick={sortItemsByName}>
+              <Button
+                variant="light"
+                className="btn-sm"
+                onClick={sortItemsByName}
+              >
                 <BsSortAlphaDown />
               </Button>
             </th>
             <th>
               Item Price{" "}
-              <Button variant="light" className="btn-sm" onClick={sortItemsByPrice}>
+              <Button
+                variant="light"
+                className="btn-sm"
+                onClick={sortItemsByPrice}
+              >
                 <BsSortNumericDown />
               </Button>
             </th>
             <th>
               Item Total Price
-              <Button variant="light" className="btn-sm" onClick={sortItemsByTotal}>
+              <Button
+                variant="light"
+                className="btn-sm"
+                onClick={sortItemsByTotal}
+              >
                 <BsSortNumericDown />
               </Button>
             </th>
             <th>Comment</th>
             <th>Edit</th>
             <th>Delete</th>
-            
           </tr>
         </thead>
         <tbody>
-          { // If sortedItems is not empty, map through sortedItems, else map through APIdata
-          sortedItems.length > 0
-            ? sortedItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.itemQuantity}</td>
-                  <td>{item.itemMeasure}</td>
-                  <td>{item.itemPrice}</td>
-                  <td>{item.itemPrice * item.itemQuantity}</td>
-                  
-                  
-                  <td>
-                    <Comments itemID={item} />
-                  </td>
-                  <td>
-                    <EditItem item={item} />
-                  </td>
-                  <td>
-                    <DeleteItem item={item} />
-                  </td>
-                </tr>
-              ))
-              // Map through APIdata
-            : APIdata.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.itemQuantity}</td>
-                  <td>{item.itemMeasure}</td>
-                  <td>{item.itemPrice}</td>
-                  <td>{item.itemPrice * item.itemQuantity}</td>
-                
-                 
-                  <td>
-                    <Comments itemID={item} /* passing props to Comments component*/ />
-                  </td>
-                  <td>
-                    <EditItem item={item} getData={GetData} /* passing props to EditItem component*/ />
-                    
-                  </td>
-                  <td>
-                    <DeleteItem item={item} getData={GetData} /* passing props to DeleteItem component*/  />
-                  </td>
-                </tr>
-              ))}
+          {
+            // If sortedItems is not empty, map through sortedItems, else map through APIdata
+            sortedItems.length > 0
+              ? sortedItems.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.itemName}</td>
+                    <td>{item.itemQuantity}</td>
+                    <td>{item.itemMeasure}</td>
+                    <td>{item.itemPrice}</td>
+                    <td>{item.itemPrice * item.itemQuantity}</td>
+
+                    <td>
+                      <Comments itemID={item} />
+                    </td>
+                    <td>
+                      <EditItem item={item} />
+                    </td>
+                    <td>
+                      <DeleteItem item={item} />
+                    </td>
+                  </tr>
+                ))
+              : // Map through APIdata
+                APIdata.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.itemName}</td>
+                    <td>{item.itemQuantity}</td>
+                    <td>{item.itemMeasure}</td>
+                    <td>{item.itemPrice}</td>
+                    <td>{item.itemPrice * item.itemQuantity}</td>
+
+                    <td>
+                      <Comments
+                        itemID={item} /* passing props to Comments component*/
+                      />
+                    </td>
+                    <td>
+                      <EditItem
+                        item={item}
+                        getData={
+                          GetData
+                        } /* passing props to EditItem component*/
+                      />
+                    </td>
+                    <td>
+                      <DeleteItem
+                        item={item}
+                        getData={
+                          GetData
+                        } /* passing props to DeleteItem component*/
+                      />
+                    </td>
+                  </tr>
+                ))
+          }
         </tbody>
       </Table>
     </div>
