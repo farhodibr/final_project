@@ -1,6 +1,7 @@
 import CreateItem from "./components/CreateItem";
 import GetItemAPI from "./components/GetItemAPI";
 import ItemSale from "./components/ItemSale";
+import CreateCustomer from "./components/CustomerInfo";
 import BlockMenu from "./components/BlockMenu";
 import {
   BrowserRouter as Router, // Renames BrowserRouter as Router
@@ -49,6 +50,14 @@ function App() {
               </Nav.Link>
               <Nav.Link>
               <Link
+                  to="/create-customer"/* Creates a link to the ItemSale component*/
+                >
+                  {" "}
+                  Create Customer
+                </Link>
+              </Nav.Link>
+              <Nav.Link>
+              <Link
                   to="/item-sale"/* Creates a link to the ItemSale component*/
                 >
                   {" "}
@@ -78,6 +87,12 @@ function App() {
           path="/item-sale"
           element={
             <ItemSale />
+          } /* Adds a route for the ItemSale component*/
+        />
+        <Route
+          path="/create-customer"
+          element={
+            <CreateCustomer />
           } /* Adds a route for the ItemSale component*/
         />
       </Routes>

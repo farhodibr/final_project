@@ -8,11 +8,23 @@ import CreateCustomer from "./CustomerInfo";
 // and save it to the API
 // I'm still working on the save function
 
-export default function Sales() {
+export default function Sales(props) {
   // Define the state variables for the component
+  const {
+    custName,
+    custAddressStreet,
+    custAddressCity,
+    custAddressState,
+    custAddressZip,
+    custPhone,
+    custEmail,
+    custComment,
+    salesDate,
+  } = props;
   const [salesData, setSalesData] = useState([]);
 
   const [customerOrder, setCustomerOrder] = useState([]);
+  console.log(props.customer, props.phone);
 
   // Fetch the sales data from the mock API when the component is mounted
   useEffect(() => {
@@ -48,7 +60,7 @@ export default function Sales() {
             soldItemPrice: updatedItem.itemPrice,
             soldItemTotalPrice: updatedItem.itemPrice * soldItemQuantity,
           };
-          // Replace the item in the customerOrder array if it already exists because of the 
+          // Replace the item in the customerOrder array if it already exists because of the
           // event.target.value bugging out
           const itemIndex = customerOrder.findIndex(
             (item) => item.id === customerOrderItem.id
@@ -87,6 +99,19 @@ export default function Sales() {
       console.log("One or more updates failed");
       console.log(error);
     }
+    axios
+      .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Orders", {
+        custName: props.customer,
+        custPhone: props.phone,
+        
+        customerOrder,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Render the component
@@ -94,7 +119,6 @@ export default function Sales() {
     <div className="fade-in">
       <br />
       <h1>Sales</h1>
-      <CreateCustomer />
 
       <Table striped bordered hover>
         <thead>

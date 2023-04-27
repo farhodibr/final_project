@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Accordion } from "react-bootstrap";
 import axios from "axios";
+import Sales from "./ItemSale";
 
 export default function CreateCustomer(props) {
   // Sets up state variables using useState hook
+  
   const [greeting, setGreeting] = useState("Add Customer's Info");
   const [custName, setCustName] = useState("");
   const [custAddressStreet, setCustAddressStreet] = useState("");
@@ -18,7 +20,7 @@ export default function CreateCustomer(props) {
   const [salesDate, setSalesDate] = useState("");
 
   const [shouldRender, setShouldRender] = useState(false); // Add state variable for re-rendering
-  const [itemMeasure, setItemMeasure] = useState("");
+
 
   // Using useEffect hook to update total price when price or quantity changes
 
@@ -38,6 +40,7 @@ export default function CreateCustomer(props) {
         custEmail,
         custComment,
         salesDate,
+        
       })
       .then((res) => {
         
@@ -137,6 +140,7 @@ export default function CreateCustomer(props) {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
+    <Sales customer = {custName} phone = {custPhone} />
     </div>
   );
 }
