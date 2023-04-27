@@ -6,6 +6,7 @@ import axios from "axios";
 
 export default function CreateCustomer(props) {
   // Sets up state variables using useState hook
+  const [greeting, setGreeting] = useState("Add Customer's Info");
   const [custName, setCustName] = useState("");
   const [custAddressStreet, setCustAddressStreet] = useState("");
   const [custAddressCity, setCustAddressCity] = useState("");
@@ -48,15 +49,29 @@ export default function CreateCustomer(props) {
       });
   };
 
+  const handleGreeting = () => {
+    if (custName.length > 0) {
+      setGreeting("Order for " + custName + "");
+      return greeting;
+      
+    } else {
+      setGreeting("Add Customer's Information");
+      return greeting;
+    
+    };
+  };
+
+
   // Rendering form using React Bootstrap components
   return (
     <div className=" fade-in">
       <br />
       <h6>Create Customer</h6>
+      <p>{greeting}</p>
 
       <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Add Customer's Information</Accordion.Header>
+        <Accordion.Item eventKey="1" onClick={handleGreeting}>
+          <Accordion.Header>{greeting}</Accordion.Header>
           <Accordion.Body>
             <Form>
               <Row className="mb-3">
@@ -72,6 +87,13 @@ export default function CreateCustomer(props) {
                   <Form.Control type="email"
                    placeholder="Enter email"
                    onChange={(event) => setCustEmail(event.target.value)} />
+                </Form.Group>
+                
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control type="phone"
+                   placeholder="Enter phone number"
+                   onChange={(event) => setCustPhone(event.target.value)} />
                 </Form.Group>
               </Row>
 
@@ -107,7 +129,8 @@ export default function CreateCustomer(props) {
 
               <Button variant="primary"
                type="submit"
-               onClick={postCustomer}>
+               onClick={postCustomer}
+               eventKey="0">
                 Submit
               </Button>
             </Form>
