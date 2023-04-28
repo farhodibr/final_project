@@ -116,7 +116,7 @@ export default function Sales(props) {
 
   // Render the component
   return (
-    <div className="fade-in">
+    <div className="sales-container fade-in">
       <br />
       <h1>Sales</h1>
 
@@ -168,6 +168,7 @@ export default function Sales(props) {
                   }
                 />
               </td>
+              
             </tr>
           ))}
         </tbody>

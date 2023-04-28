@@ -2,7 +2,7 @@ import CreateItem from "./components/CreateItem";
 import GetItemAPI from "./components/GetItemAPI";
 import ItemSale from "./components/ItemSale";
 import CreateCustomer from "./components/CustomerInfo";
-import BlockMenu from "./components/BlockMenu";
+import CustomerOrders from "./components/CustomerOrders";
 import {
   BrowserRouter as Router, // Renames BrowserRouter as Router
   Routes,
@@ -50,7 +50,7 @@ function App() {
               </Nav.Link>
               <Nav.Link>
               <Link
-                  to="/create-customer"/* Creates a link to the ItemSale component*/
+                  to="/create-customer"/* Creates a link to the CreateCustomer component*/
                 >
                   {" "}
                   Create Customer
@@ -62,6 +62,14 @@ function App() {
                 >
                   {" "}
                   Sales
+                </Link>
+              </Nav.Link>
+              <Nav.Link>
+              <Link
+                  to="/customer-orders"/* Creates a link to the CustomerOrders component*/
+                >
+                  {" "}
+                  Customer Orders
                 </Link>
               </Nav.Link>
               
@@ -93,6 +101,12 @@ function App() {
           path="/create-customer"
           element={
             <CreateCustomer />
+          } /* Adds a route for the ItemSale component*/
+        />
+        <Route
+          path="/customer-orders"
+          element={
+            <CustomerOrders />
           } /* Adds a route for the ItemSale component*/
         />
       </Routes>

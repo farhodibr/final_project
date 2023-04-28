@@ -67,7 +67,7 @@ export default function CreateCustomer(props) {
 
   // Rendering form using React Bootstrap components
   return (
-    <div className=" fade-in">
+    <div className="sales-container fade-in">
       <br />
       <h6>Create Customer</h6>
       <p>{greeting}</p>
@@ -92,7 +92,7 @@ export default function CreateCustomer(props) {
                    onChange={(event) => setCustEmail(event.target.value)} />
                 </Form.Group>
                 
-                <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Group as={Col} controlId="formGridPhone">
                   <Form.Label>Phone</Form.Label>
                   <Form.Control type="phone"
                    placeholder="Enter phone number"
