@@ -30,7 +30,7 @@ export default function SearchCustomers() {
       });
   }, []);
 
- /* const handleGreeting = () => {
+  /* const handleGreeting = () => {
     if (custName.length > 0) {
       setGreeting("Please enter customer's Name, Phone, and Email");
       return greeting;
@@ -45,27 +45,26 @@ export default function SearchCustomers() {
   const searchCustomer = (e) => {
     e.preventDefault();
     let customerName = document.getElementById("customerName").value;
-  
+
     let customerPhone = document.getElementById("customerPhone").value;
     let customerEmail = document.getElementById("customerEmail").value;
 
-    setFilteredCustomers (customersAPI.filter((customer) => {
-      if (
-        customer.custName === customerName &&
-      
-        customer.custPhone === customerPhone &&
-        customer.custEmail === customerEmail
-      ) {
-        //handleShowModal();
-        return customer;
-        
-      } else {
-        return null;
-      }
-    }));
+    setFilteredCustomers(
+      customersAPI.filter((customer) => {
+        if (
+          customer.custName.toLowerCase() === customerName.toLowerCase() &&
+          customer.custPhone.toLowerCase() === customerPhone.toLowerCase() &&
+          customer.custEmail.toLowerCase() === customerEmail.toLowerCase()
+        ) {
+          return customer;
+        } else {
+          return null;
+        }
+      })
+    );
+    
 
     // Handle filtered customers
-
   };
 
   const handleShowModal = () => {
@@ -75,107 +74,130 @@ export default function SearchCustomers() {
 
   return (
     <div className="container fade-in">
-      
       <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="1" >
+        <Accordion.Item eventKey="1">
           <Accordion.Header>{greeting}</Accordion.Header>
           <Accordion.Body>
-      <h4>Search Customers</h4>
-      <h4>Please enter Customer's Full Name, Phone Number and Email address</h4>
-      <br />
-      <form onSubmit={searchCustomer}>
-        <div className="row">
-          <div className="col-sm-4">
-            <div className="form-group">
-              <label htmlFor="customerName">Name:</label>
-              <input type="text" className="form-control" id="customerName" placeholder="Enter name" />
-            </div>
-          </div>
-          
-          <div className="col-sm-4">
-            <div className="form-group">
-              <label htmlFor="customerPhone">Phone:</label>
-              <input type="text" className="form-control" id="customerPhone" placeholder="Enter phone" />
-            </div>
-          </div>
-          <div className="col-sm-4">
-            <div className="form-group">
-              <label htmlFor="customerEmail">Email:</label>
-              <input type="email" className="form-control" id="customerEmail" placeholder="Enter email" />
-            </div>
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary"
-        onClick={searchCustomer}>Search</button>
-      </form>
-  
-      <div className="row">
-        {filteredCustomers.map(customer => (
-          <div className="col-sm-6" key={customer.id}>
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">{customer.custName}</h5>
+            <h4>Search Customers</h4>
+            <h4>
+              Please enter Customer's Full Name, Phone Number and Email address
+            </h4>
+            <br />
+            <form onSubmit={searchCustomer}>
+              <div className="row">
+                <div className="col-sm-4">
+                  <div className="form-group">
+                    <label htmlFor="customerName">Name:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="customerName"
+                      placeholder="Enter name"
+                    />
+                  </div>
+                </div>
+
+                <div className="col-sm-4">
+                  <div className="form-group">
+                    <label htmlFor="customerPhone">Phone:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="customerPhone"
+                      placeholder="Enter phone"
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-4">
+                  <div className="form-group">
+                    <label htmlFor="customerEmail">Email:</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="customerEmail"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="card-body">
-                <p className="card-text">{customer.custAddressStreet}</p>
-                <p className="card-text">{customer.custAddressCity}</p>
-                <p className="card-text">{customer.custAddressState}</p>
-                <p className="card-text">{customer.custAddressZip}</p>
-                <p className="card-text">{customer.custPhone}</p>
-                <p className="card-text">{customer.custEmail}</p>
-                <Button variant="primary" onClick={() => handleShowModal(customer)}>
-                  View Orders
-                </Button>
-              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={searchCustomer}
+              >
+                Search
+              </button>
+            </form>
+
+            <div className="row">
+              <h5>Matched Customers</h5>
+              {filteredCustomers.map((customer) => (
+                <div className="col-sm-6" key={customer.id}>
+                  <div className="card">
+                    <div className="card-header">
+                      <h5 className="card-title">{customer.custName}</h5>
+                    </div>
+                    <div className="card-body">
+                      <p className="card-text">{customer.custAddressStreet}</p>
+                      <p className="card-text">{customer.custAddressCity}</p>
+                      <p className="card-text">{customer.custAddressState}</p>
+                      <p className="card-text">{customer.custAddressZip}</p>
+                      <p className="card-text">{customer.custPhone}</p>
+                      <p className="card-text">{customer.custEmail}</p>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleShowModal(customer)}
+                      >
+                        View Orders
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
-      </div>
-  
-      {// Modal to show matched customer
-      showModal && (
-        <Modal show={showModal} onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Customer Orders</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Order Date</th>
-                  <th>Order Total</th>
-                </tr>
 
+            {
+              // Modal to show matched customer
+              showModal && (
+                <Modal show={showModal} onHide={() => setShowModal(false)}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Customer Orders</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Table striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Order Date</th>
+                          <th>Order Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {customerOrdersAPI.map((customer) => (
+                          <tr key={customer.id}>
+                            <td>{customer.custName}</td>
 
-
-              </thead>
-              <tbody>
-                {customerOrdersAPI.map((customer) => (
-                  <tr key={customer.id}>
-                    <td>{customer.custName}</td>
-                    
-
-                    <td>{customer.custPhone}</td>
-                    <td>{customer.custEmail}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-      </Accordion.Body>
+                            <td>{customer.custPhone}</td>
+                            <td>{customer.custEmail}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              )
+            }
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-
-
     </div>
   );
-  
 }
