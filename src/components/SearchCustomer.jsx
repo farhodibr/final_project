@@ -154,7 +154,7 @@ export default function SearchCustomers() {
                 {customerOrdersAPI.map((customer) => (
                   <tr key={customer.id}>
                     <td>{customer.custName}</td>
-
+                    
 
                     <td>{customer.custPhone}</td>
                     <td>{customer.custEmail}</td>

@@ -50,7 +50,11 @@ export default function CustomerOrders() {
             <tr key={customer.id}>
               <td>{customer.id}</td>
               <td>{customer.custName}</td>
-              <td>{customer.custAddress}</td>
+              <td>{customer.custAddressStreet} {', '}
+                  {customer.custAddressCity} {', '}
+                  {customer.custAddressState} {' '}
+                  {customer.custAddressZip}
+                  </td>
               <td>{customer.custPhone}</td>
               <td>{customer.custEmail}</td>
               
