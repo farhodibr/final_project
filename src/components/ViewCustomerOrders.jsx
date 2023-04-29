@@ -56,7 +56,7 @@ export default function ViewCustomerOrders(props) {
           searchCustomer();
         }}
       >
-        View Orders
+        View Order
       </Button>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
@@ -69,6 +69,7 @@ export default function ViewCustomerOrders(props) {
                 <th></th>
                 <th>Item Name</th>
                 <th>Quantity</th>
+                <th>Measure</th>
                 <th>Item Price</th>
                 <th>Order Total</th>
               </tr>
@@ -79,6 +80,7 @@ export default function ViewCustomerOrders(props) {
                   <td>{customerOrder.id}</td>
                   <td>{customerOrder.itemName}</td>
                   <td>{customerOrder.soldItemQuantity}</td>
+                  <td>{customerOrder.soldItemMeasure}</td>
                   <td>{customerOrder.soldItemPrice}</td>
                   <td>{customerOrder.soldItemTotalPrice}</td>
                 </tr>

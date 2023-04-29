@@ -57,6 +57,7 @@ export default function Sales(props) {
             id: updatedItem.id,
             itemName: updatedItem.itemName,
             soldItemQuantity: soldItemQuantity,
+            soldItemMeasure: updatedItem.itemMeasure,
             soldItemPrice: updatedItem.itemPrice,
             soldItemTotalPrice: updatedItem.itemPrice * soldItemQuantity,
           };
@@ -103,6 +104,7 @@ export default function Sales(props) {
       .post("https://64095fb26ecd4f9e18aec05b.mockapi.io/Orders", {
         custName: props.customer,
         custPhone: props.phone,
+
         
         customerOrder,
       })
@@ -126,6 +128,7 @@ export default function Sales(props) {
             <th>Item</th>
             <th>Price</th>
             <th>Inventory</th>
+            <th>Measure</th>
             <th>Sold Today</th>
             <th>Total Sales</th>
           </tr>
@@ -157,6 +160,15 @@ export default function Sales(props) {
                   value={item.itemQuantity}
                   onChange={(event) =>
                     handleCellChange(event, rowIndex, "itemQuantity")
+                  }
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.itemMeasure}
+                  onChange={(event) =>
+                    handleCellChange(event, rowIndex, "itemMeasure")
                   }
                 />
               </td>

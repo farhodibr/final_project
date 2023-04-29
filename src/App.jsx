@@ -55,17 +55,10 @@ function App() {
                   to="/create-customer"/* Creates a link to the CreateCustomer component*/
                 >
                   {" "}
-                  Create Customer
+                  Create Customer's Order
                 </Link>
               </Nav.Link>
-              <Nav.Link>
-              <Link
-                  to="/item-sale"/* Creates a link to the ItemSale component*/
-                >
-                  {" "}
-                  Sales
-                </Link>
-              </Nav.Link>
+              
               <Nav.Link>
               <Link
                   to="/customer-orders"/* Creates a link to the CustomerOrders component*/
