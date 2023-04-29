@@ -3,7 +3,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 
 export default function ViewCustomerOrders(props) {
-  const {name, phone, email, orders} = props;
+  const { name, phone, email, orders } = props;
   const [customerOrdersAPI, setCustomerOrdersAPI] = useState([]);
   const [customersAPI, setCustomersAPI] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -11,40 +11,10 @@ export default function ViewCustomerOrders(props) {
 
   console.log(orders);
 
-  /* useEffect(() => {
-    axios
-      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Customers")
-      .then((res) => {
-        setCustomersAPI(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Orders")
-      .then((res) => {
-        setCustomerOrdersAPI(res.data);
-        console.log(customerOrdersAPI);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []); */
-
+  // Search for customer orders
   const searchCustomer = () => {
-    //e.preventDefault();
-   /* let customerName = document.getElementById("customerName").value;
-    let customerAddress = document.getElementById("customerAddress").value;
-    let customerPhone = document.getElementById("customerPhone").value;
-    let customerEmail = document.getElementById("customerEmail").value; */
-
     let filteredOrders = orders.filter((order) => {
-      if (
-        order.custName === name &&
-        order.custPhone === phone 
-
-      ) {
+      if (order.custName === name && order.custPhone === phone) {
         return order;
       } else {
         return null;
@@ -53,22 +23,21 @@ export default function ViewCustomerOrders(props) {
     console.log(filteredOrders);
     function getAllOrders(customers) {
       const orders = [];
-    
+
       // Loop through each customer object
       for (let i = 0; i < customers.length; i++) {
         const customer = customers[i];
-    
+
         // Add the customer's order array to the orders array
         orders.push(...customer.customerOrder);
         console.log(orders);
       }
-    
+
       return orders;
     }
 
     setFilteredCustomerOrders(getAllOrders(filteredOrders));
     console.log(filteredCustomerOrders);
-    
   };
 
   const handleShowModal = () => {
@@ -82,8 +51,10 @@ export default function ViewCustomerOrders(props) {
       <Button
         className="fade-in"
         variant="primary"
-        onClick={() => {handleShowModal();
-                        searchCustomer();}}
+        onClick={() => {
+          handleShowModal();
+          searchCustomer();
+        }}
       >
         View Orders
       </Button>
