@@ -138,8 +138,8 @@ export default function CreateItem(props) {
           />
         </Col>
         <Col xs={2}>
-          Item Total Price {itemTotalPrice}
-          <Form.Control placeholder="Price" value={itemTotalPrice} />
+          Item Total Price
+          <Form.Control placeholder="Price" value={itemPrice * itemQuantity} />
         </Col>
         <Col xs={2}>
           Leave comment
