@@ -95,10 +95,10 @@ export default function ViewCustomerOrders(props) {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Customer ID</th>
-                <th>Order Date</th>
-                <th>Order Total</th>
+                <th></th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Item Price</th>
                 <th>Order Total</th>
               </tr>
             </thead>
