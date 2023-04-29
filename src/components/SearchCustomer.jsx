@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { Accordion } from "react-bootstrap";
+import ViewCustomerOrders from "./ViewCustomerOrders";
 
 export default function SearchCustomers() {
   const [customerOrdersAPI, setCustomerOrdersAPI] = useState([]);
@@ -9,6 +10,9 @@ export default function SearchCustomers() {
   const [showModal, setShowModal] = useState(false);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [greeting, setGreeting] = useState("Search Customers");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
 
   useEffect(() => {
     axios
@@ -45,9 +49,11 @@ export default function SearchCustomers() {
   const searchCustomer = (e) => {
     e.preventDefault();
     let customerName = document.getElementById("customerName").value;
-
     let customerPhone = document.getElementById("customerPhone").value;
     let customerEmail = document.getElementById("customerEmail").value;
+    setCustomerName(customerName);
+    setCustomerPhone(customerPhone);
+    setCustomerEmail(customerEmail);
 
     setFilteredCustomers(
       customersAPI.filter((customer) => {
@@ -62,7 +68,6 @@ export default function SearchCustomers() {
         }
       })
     );
-    
 
     // Handle filtered customers
   };
@@ -144,12 +149,12 @@ export default function SearchCustomers() {
                       <p className="card-text">{customer.custAddressZip}</p>
                       <p className="card-text">{customer.custPhone}</p>
                       <p className="card-text">{customer.custEmail}</p>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleShowModal(customer)}
-                      >
-                        View Orders
-                      </Button>
+                      <ViewCustomerOrders
+                        name={customerName}
+                        phone={customerPhone}
+                        email={customerEmail}
+                        orders={customerOrdersAPI}
+                      />
                     </div>
                   </div>
                 </div>

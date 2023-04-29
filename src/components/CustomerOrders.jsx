@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
+import ViewCustomerOrders from "./ViewCustomerOrders";
 import SearchCustomers from "./SearchCustomer";
+
 
 export default function CustomerOrders() {
   const [customerOrdersAPI, setCustomerOrdersAPI] = useState([]); // Add state variable for API data
@@ -59,14 +61,12 @@ export default function CustomerOrders() {
               <td>{customer.custEmail}</td>
               
               <td>  
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                >
-                  View Orders
-                </Button>
+              <ViewCustomerOrders
+                        name={customer.custName}
+                        phone={customer.custPhone}
+                        email={customer.custEmail}
+                        orders={customerOrdersAPI}
+                      />
               </td>
             </tr>
           ))}

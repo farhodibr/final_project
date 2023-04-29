@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import axios from "axios";
 
-export default function SearchCustomers() {
+export default function ViewCustomerOrders(props) {
+  const {name, phone, email, orders} = props;
   const [customerOrdersAPI, setCustomerOrdersAPI] = useState([]);
   const [customersAPI, setCustomersAPI] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [filteredCustomerOrders, setFilteredCustomerOrders] = useState([]);
 
-  useEffect(() => {
+  console.log(orders);
+
+  /* useEffect(() => {
     axios
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Customers")
       .then((res) => {
@@ -21,34 +25,50 @@ export default function SearchCustomers() {
       .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/Orders")
       .then((res) => {
         setCustomerOrdersAPI(res.data);
+        console.log(customerOrdersAPI);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, []); */
 
-  const searchCustomer = (e) => {
-    e.preventDefault();
-    let customerName = document.getElementById("customerName").value;
+  const searchCustomer = () => {
+    //e.preventDefault();
+   /* let customerName = document.getElementById("customerName").value;
     let customerAddress = document.getElementById("customerAddress").value;
     let customerPhone = document.getElementById("customerPhone").value;
-    let customerEmail = document.getElementById("customerEmail").value;
+    let customerEmail = document.getElementById("customerEmail").value; */
 
-    let filteredCustomers = customersAPI.filter((customer) => {
+    let filteredOrders = orders.filter((order) => {
       if (
-        customer.custName === customerName &&
-        customer.custAddress === customerAddress &&
-        customer.custPhone === customerPhone &&
-        customer.custEmail === customerEmail
+        order.custName === name &&
+        order.custPhone === phone 
+
       ) {
-        return customer;
+        return order;
       } else {
         return null;
       }
     });
+    console.log(filteredOrders);
+    function getAllOrders(customers) {
+      const orders = [];
+    
+      // Loop through each customer object
+      for (let i = 0; i < customers.length; i++) {
+        const customer = customers[i];
+    
+        // Add the customer's order array to the orders array
+        orders.push(...customer.customerOrder);
+        console.log(orders);
+      }
+    
+      return orders;
+    }
 
-    // Handle filtered customers
-
+    setFilteredCustomerOrders(getAllOrders(filteredOrders));
+    console.log(filteredCustomerOrders);
+    
   };
 
   const handleShowModal = () => {
@@ -59,12 +79,17 @@ export default function SearchCustomers() {
   return (
     <div className="container fade-in">
       <br />
-      <Button className="fade-in" variant="primary" onClick={() => handleShowModal()}>
-      Search for Customer
+      <Button
+        className="fade-in"
+        variant="primary"
+        onClick={() => {handleShowModal();
+                        searchCustomer();}}
+      >
+        View Orders
       </Button>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Customer Orders</Modal.Title>
+          <Modal.Title>{name} Orders</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table striped bordered hover>
@@ -74,15 +99,17 @@ export default function SearchCustomers() {
                 <th>Customer ID</th>
                 <th>Order Date</th>
                 <th>Order Total</th>
+                <th>Order Total</th>
               </tr>
             </thead>
             <tbody>
-              {customerOrdersAPI.map((customerOrder) => (
+              {filteredCustomerOrders.map((customerOrder) => (
                 <tr key={customerOrder.id}>
                   <td>{customerOrder.id}</td>
-                  <td>{customerOrder.custId}</td>
-                  <td>{customerOrder.orderDate}</td>
-                  <td>{customerOrder.orderTotal}</td>
+                  <td>{customerOrder.itemName}</td>
+                  <td>{customerOrder.soldItemQuantity}</td>
+                  <td>{customerOrder.soldItemPrice}</td>
+                  <td>{customerOrder.soldItemTotalPrice}</td>
                 </tr>
               ))}
             </tbody>
