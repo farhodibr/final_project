@@ -9,7 +9,7 @@ export default function ViewCustomerOnMap(props) {
 
   const [showModal, setShowModal] = useState(false);
   const [customerLocation, setCustomerLocation] = useState({});
-  const [customerOrders, setCustomerOrders] = useState([]);
+  const [APIkey, setAPIkey] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleShowModal = () => {
@@ -17,18 +17,38 @@ export default function ViewCustomerOnMap(props) {
     setShowModal(true);
   };
 
+  useEffect(() => 
+     axios.get(
+          "https://64095fb26ecd4f9e18aec05b.mockapi.io/APIkey"
+        )
+        .then ((response) => {
+        setAPIkey(response.data);
+        console.log(APIkey);
+        setIsLoading(false);
+      } )
+      .catch (error => {
+        console.error(error);
+        setIsLoading(false);
+      })
+  , []);
+
+
+    
+   
+
   // Create a function to show customer on map
   const showCustomerOnMap = async () => {
     const address = `${streetName}, ${city}, ${state} ${zip}`;
     const geocodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?new_forward_geocoder=true&address=${encodeURIComponent(
       address
-    )}&key=AIzaSyC8psV1m5fNQ3Fho4No5UPVmwtl2YEalOk`;
+    )}&key=${APIkey[0].key}`;
 
     try {
       const response = await axios.get(geocodingApiUrl);
       const location = response.data.results[0].geometry.location;
       console.log(location);
       setCustomerLocation(location);
+      
       handleShowModal();
     } catch (error) {
       console.error(error);
@@ -42,7 +62,7 @@ export default function ViewCustomerOnMap(props) {
     
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: 'AIzaSyC8psV1m5fNQ3Fho4No5UPVmwtl2YEalOk',
+        key: APIkey[0].key,
         language: "en",
         region: "en",}}
       defaultCenter={customerLocation}
@@ -56,21 +76,7 @@ export default function ViewCustomerOnMap(props) {
     </GoogleMapReact>
   );
 
-  useEffect(() => {
-    const fetchCustomerOrdersAPI = async () => {
-      try {
-        const response = await axios.get(
-          `https://64095fb26ecd4f9e18aec05b.mockapi.io/orders`
-        );
-        setCustomerOrders(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    };
-    fetchCustomerOrdersAPI();
-  }, []);
+  
 
   return (
     <div className="container fade-in">

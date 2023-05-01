@@ -78,6 +78,7 @@ export default function GetItem() {
         setShouldRender(true); // Set state variable to true to trigger re-render
       });
   }, []);
+  
 
   return (
     <div className="container inventory-table fade-in">
