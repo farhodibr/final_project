@@ -38,16 +38,21 @@ export default function ViewCustomerOnMap(props) {
   };
 
   const Map = () => (
+    
+    
     <GoogleMapReact
-      apiKey="AIzaSyC8psV1m5fNQ3Fho4No5UPVmwtl2YEalOk"
+      bootstrapURLKeys={{
+        key: 'AIzaSyC8psV1m5fNQ3Fho4No5UPVmwtl2YEalOk',
+        language: "en",
+        region: "en",}}
       defaultCenter={customerLocation}
       defaultZoom={17}
     >
       <Marker
-        lat={customerLocation.lat}
-        lng={customerLocation.lng}
-        text="My Marker"
-      />
+      lat={customerLocation.lat}
+      lng={customerLocation.lng}
+      text="My Marker"
+    />
     </GoogleMapReact>
   );
 
@@ -81,10 +86,7 @@ export default function ViewCustomerOnMap(props) {
             </div>
           </Modal.Body>
         ) : (
-          <Modal.Body>
-            Loading map...
-            <Map />
-          </Modal.Body>
+          <Modal.Body>Loading map...<Map /></Modal.Body>
         )}
       </Modal>
     </div>
