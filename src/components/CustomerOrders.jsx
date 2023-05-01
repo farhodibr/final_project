@@ -3,6 +3,8 @@ import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 import ViewCustomerOrders from "./ViewCustomerOrders";
 import SearchCustomers from "./SearchCustomer";
+import ViewCustomerOnMap from "./CustomerMap";
+
 
 
 export default function CustomerOrders() {
@@ -65,6 +67,18 @@ export default function CustomerOrders() {
                         name={customer.custName}
                         phone={customer.custPhone}
                         email={customer.custEmail}
+                        orders={customerOrdersAPI}
+                      />
+              </td>
+              <td>  
+              <ViewCustomerOnMap
+                        name={customer.custName}
+                        phone={customer.custPhone}
+                        email={customer.custEmail}
+                        streetName={customer.custAddressStreet}
+                        city={customer.custAddressCity}
+                        state={customer.custAddressState}
+                        zip={customer.custAddressZip}
                         orders={customerOrdersAPI}
                       />
               </td>

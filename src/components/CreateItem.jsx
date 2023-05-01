@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
-import EditItem from "./EditItem";
-import ItemMeasure from "./DropdownItemPackage";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
+
 
 export default function CreateItem(props) {
   // Sets up state variables using useState hook
