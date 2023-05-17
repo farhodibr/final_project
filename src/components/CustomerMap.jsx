@@ -40,7 +40,7 @@ export default function ViewCustomerOnMap(props) {
     const address = `${streetName}, ${city}, ${state} ${zip}`;
     const geocodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?new_forward_geocoder=true&address=${encodeURIComponent(
       address
-    )}&key=AIzaSyBIt4j7RGVydsRXBvIX4ZWmpqnEsFoeDCU`;
+    )}&key=${APIkey[0].key}`;
 
     try {
       const response = await axios.get(geocodingApiUrl);
@@ -61,7 +61,7 @@ export default function ViewCustomerOnMap(props) {
   const Map = () => (
     <div style={{ height: "400px", width: "100%" }} className="google-map">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyBIt4j7RGVydsRXBvIX4ZWmpqnEsFoeDCU" }}
+        bootstrapURLKeys={{ key: APIkey[0].key }}
         
         defaultCenter={customerLocation}
         defaultZoom={15}
