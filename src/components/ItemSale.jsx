@@ -22,6 +22,7 @@ export default function Sales(props) {
     salesDate,
   } = props;
   const [salesData, setSalesData] = useState([]);
+  //const [soldItemQuantity, setSoldItemQuantity] = useState(0);
 
   const [customerOrder, setCustomerOrder] = useState([]);
   console.log(props.customer, props.phone);
@@ -47,8 +48,10 @@ export default function Sales(props) {
 
       if (property === "soldItemQuantity") {
         const soldItemQuantity = parseInt(event.target.value, 10);
+
         const remainingItemQuantity =
           updatedItem.itemQuantity - soldItemQuantity;
+
         updatedItem.itemQuantity =
           remainingItemQuantity >= 0 ? remainingItemQuantity : 0;
         if (soldItemQuantity > 0) {
@@ -61,6 +64,7 @@ export default function Sales(props) {
             soldItemPrice: updatedItem.itemPrice,
             soldItemTotalPrice: updatedItem.itemPrice * soldItemQuantity,
           };
+
           // Replace the item in the customerOrder array if it already exists because of the
           // event.target.value bugging out
           const itemIndex = customerOrder.findIndex(
@@ -105,7 +109,6 @@ export default function Sales(props) {
         custName: props.customer,
         custPhone: props.phone,
 
-        
         customerOrder,
       })
       .then((response) => {
@@ -175,12 +178,12 @@ export default function Sales(props) {
               <td>
                 <input
                   type="number"
+               
                   onChange={(event) =>
                     handleCellChange(event, rowIndex, "soldItemQuantity")
                   }
                 />
               </td>
-              
             </tr>
           ))}
         </tbody>

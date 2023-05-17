@@ -4,6 +4,7 @@ import axios from "axios";
 import ViewCustomerOrders from "./ViewCustomerOrders";
 import SearchCustomers from "./SearchCustomer";
 import ViewCustomerOnMap from "./CustomerMap";
+import CreateInvoice from "./CreateInvoice";
 
 
 
@@ -71,7 +72,7 @@ export default function CustomerOrders() {
                       />
               </td>
               <td>  
-              <ViewCustomerOnMap
+             {/* <ViewCustomerOnMap
                         name={customer.custName}
                         phone={customer.custPhone}
                         email={customer.custEmail}
@@ -80,7 +81,19 @@ export default function CustomerOrders() {
                         state={customer.custAddressState}
                         zip={customer.custAddressZip}
                         orders={customerOrdersAPI}
-                      />
+          />*/}
+              </td>
+              <td>
+              <CreateInvoice
+                        name={customer.custName}
+                        phone={customer.custPhone}
+                        email={customer.custEmail}
+                        streetName={customer.custAddressStreet}
+                        city={customer.custAddressCity}
+                        state={customer.custAddressState}
+                        zip={customer.custAddressZip}
+                        orders={customerOrdersAPI}
+          />
               </td>
             </tr>
           ))}

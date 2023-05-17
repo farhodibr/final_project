@@ -4,44 +4,43 @@ import axios from "axios";
 import GoogleMapReact from "google-map-react";
 import Marker from "google-map-react";
 
+
 export default function ViewCustomerOnMap(props) {
-  const { name, phone, email, streetName, city, state, zip, orders } = props;
+  const { name, streetName, city, state, zip } = props;
 
   const [showModal, setShowModal] = useState(false);
   const [customerLocation, setCustomerLocation] = useState({});
   const [APIkey, setAPIkey] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMapLoading, setIsMapLoading] = useState(true);
 
   const handleShowModal = () => {
     // Show modal
     setShowModal(true);
   };
 
-  useEffect(() => 
-     axios.get(
-          "https://64095fb26ecd4f9e18aec05b.mockapi.io/APIkey"
-        )
-        .then ((response) => {
-        setAPIkey(response.data);
-        console.log(APIkey);
-        setIsLoading(false);
-      } )
-      .catch (error => {
-        console.error(error);
-        setIsLoading(false);
-      })
-  , []);
-
-
-    
-   
+  useEffect(
+    () =>
+      axios
+        .get("https://64095fb26ecd4f9e18aec05b.mockapi.io/APIkey")
+        .then((response) => {
+          setAPIkey(response.data);
+          console.log(APIkey);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setIsLoading(false);
+        }),
+    []
+  );
 
   // Create a function to show customer on map
   const showCustomerOnMap = async () => {
     const address = `${streetName}, ${city}, ${state} ${zip}`;
     const geocodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?new_forward_geocoder=true&address=${encodeURIComponent(
       address
-    )}&key=${APIkey[0].key}`;
+    )}&key=AIzaSyBIt4j7RGVydsRXBvIX4ZWmpqnEsFoeDCU`;
 
     try {
       const response = await axios.get(geocodingApiUrl);
@@ -49,6 +48,7 @@ export default function ViewCustomerOnMap(props) {
       console.log(location);
       setCustomerLocation(location);
       
+
       handleShowModal();
     } catch (error) {
       console.error(error);
@@ -56,27 +56,27 @@ export default function ViewCustomerOnMap(props) {
       setShowModal(false);
     }
   };
+  console.log(customerLocation);
 
   const Map = () => (
-    
-    
-    <GoogleMapReact
-      bootstrapURLKeys={{
-        key: APIkey[0].key,
-        language: "en",
-        region: "en",}}
-      defaultCenter={customerLocation}
-      defaultZoom={17}
-    >
-      <Marker
-      lat={customerLocation.lat}
-      lng={customerLocation.lng}
-      text="My Marker"
-    />
-    </GoogleMapReact>
+    <div style={{ height: "400px", width: "100%" }} className="google-map">
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: "AIzaSyBIt4j7RGVydsRXBvIX4ZWmpqnEsFoeDCU" }}
+        
+        defaultCenter={customerLocation}
+        defaultZoom={15}
+        onTilesLoaded={() => setIsMapLoading(false)}
+      >
+        <Marker
+          lat={customerLocation.lat}
+          lng={customerLocation.lng}
+          text="My Marker"
+          icon="fas fa-map-marker-alt"
+        />
+      </GoogleMapReact>
+      {isMapLoading && <Spinner animation="border" />}
+    </div>
   );
-
-  
 
   return (
     <div className="container fade-in">
@@ -92,7 +92,10 @@ export default function ViewCustomerOnMap(props) {
             </div>
           </Modal.Body>
         ) : (
-          <Modal.Body>Loading map...<Map /></Modal.Body>
+          <Modal.Body>
+            Loading map...
+          
+          </Modal.Body>
         )}
       </Modal>
     </div>
